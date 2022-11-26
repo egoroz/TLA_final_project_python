@@ -1,6 +1,7 @@
 import pygame as pg
 import thorpy as thorpy
 
+# Это пойдет потом в main, сделал для запуска
 WIDTH = 1000
 HEIGHT = 800
 font_name = pg.font.match_font('arial')
@@ -29,6 +30,7 @@ def buttons(screen):
 
 buttons(screen)
 
+# Это тоже для пробного запуска
 running = True
 while running:
      for event in pg.event.get():    
