@@ -22,7 +22,7 @@ def buttons(screen):
     for element in menu.get_population():
         element.surface = screen
 
-    box.set_topleft((WIDTH//2 - 35, HEIGHT//2 - 225))
+    box.set_topleft((WIDTH//2 - 35, HEIGHT - 150))
     box.blit()
     box.update()
     return box
