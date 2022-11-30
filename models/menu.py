@@ -2,9 +2,6 @@ import sys
 import pygame as pg
 from os import path
 
-pg.init()
-fps = 60
-fpsClock = pg.time.Clock()
 width, height = 640, 480
 screen = pg.display.set_mode((width, height))
 
@@ -89,15 +86,3 @@ def resume_game():
 New_game_button = Button(120, 70, 400, 100, 'New Game', new_game)
 Exit_game_button = Button(120, 180, 400, 100, 'Exit game', exit_game)
 Resume_game_button = Button(120, 290, 400, 100, 'Resume game', resume_game)
-
-while True:
-    theme()
-    for event in pg.event.get():
-        if event.type == pg.QUIT:
-            pg.quit()
-
-    for object in objects:
-        object.process()
-
-    pg.display.flip()
-    fpsClock.tick(fps)
