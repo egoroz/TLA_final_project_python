@@ -1,4 +1,5 @@
 import models.menu as menu
+import sys
 import pygame as pg
 
 fps = 60
