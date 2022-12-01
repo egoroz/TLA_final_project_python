@@ -24,17 +24,23 @@ class Platform:
         pg.draw.rect(self.screen, self.color, (self.x1, self.y1, self.x2, self.y2))
 
 
-platforms.append(Platform(screen, 0, 0, width, 30, BLACK)) # верхняя граница
-platforms.append(Platform(screen, 0, 0, 30, height//2.5, BLACK)) #левая верхняя
-platforms.append(Platform(screen, 0, height//1.7, 30, height, BLACK)) #левая нижняя
-platforms.append(Platform(screen, width-30, 0, width, height//2.5, BLACK)) #правая верхняя
-platforms.append(Platform(screen, width-30, height//1.7, width, height, BLACK)) #правая нижняя
-platforms.append(Platform(screen, 0, height-70, width, height, BLACK)) #нижняя
-platforms.append(Platform(screen, 30, height//2.5 - 30, width // 9, 30, BLACK)) #коридор слева верх
-platforms.append(Platform(screen, 30, height//1.7 , width // 9, 30, BLACK)) #коридор слева низ
-platforms.append(Platform(screen, width-30 - width // 9, height//2.5 - 30, width // 9, 30, BLACK)) #коридор справа верх
-platforms.append(Platform(screen, width-30 - width // 9, height//1.7 , width // 9, 30, BLACK)) #коридор справа низ
-platforms.append(Platform(screen, 10, 10, 200, 100, BLACK)) # заготовка
+platforms.append(Platform(screen, 0, 0, width, 30, BLACK))  # верхняя граница
+platforms.append(Platform(screen, 0, 0, 30, height//2.5, BLACK))  # левая верхняя граница
+platforms.append(Platform(screen, 0, height//1.7, 30, height, BLACK))  # левая нижняя граница
+platforms.append(Platform(screen, width-30, 0, width, height//2.5, BLACK))  # правая верхняя граница
+platforms.append(Platform(screen, width-30, height//1.7, width, height, BLACK))  # правая нижняя граница
+platforms.append(Platform(screen, 0, height-70, width, height, BLACK))  # нижняя граница
+platforms.append(Platform(screen, 30, height//2.5 - 30, width // 9, 30, BLACK))  # коридор слева верх
+platforms.append(Platform(screen, 30, height//1.7, width // 9, 30, BLACK))  # коридор слева низ
+platforms.append(Platform(screen, width-30 - width // 9, height//2.5 - 30, width // 9, 30, BLACK))  # коридор справа верх
+platforms.append(Platform(screen, width-30 - width // 9, height//1.7, width // 9, 30, BLACK))  # коридор справа низ
+platforms.append(Platform(screen, width//2 - 100, height//2 - 30, 200, 30, BLACK))  # центральная платформа
+platforms.append(Platform(screen, 180, 160, 150, 30, BLACK))  # левая верхняя платформа
+platforms.append(Platform(screen, 550, 160, 150, 30, BLACK))  # правая верхняя платформа
+platforms.append(Platform(screen, 180, 400, 150, 30, BLACK))  # левая нижняя платформа
+platforms.append(Platform(screen, 550, 400, 150, 30, BLACK))  # правая нижняя платформа
+platforms.append(Platform(screen, 369, 30, 150, 70, BLACK))  # самая верхняя платформа
+
 
 fps = 60
 fpsClock = pg.time.Clock()
