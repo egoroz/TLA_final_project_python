@@ -7,7 +7,8 @@ width, height = 900, 600
 screen = pg.display.set_mode((width, height))
 
 platforms = []
-WHITE = (200, 200,200)
+WHITE = (200, 200, 200)
+GRAY = (150, 150, 150)
 BLACK = (0, 0, 0)
 BROWN = (100, 50, 20)
 
@@ -37,10 +38,26 @@ platforms.append(Platform(screen, width-30 - width // 9, height//1.7, width // 9
 platforms.append(Platform(screen, width//2 - 100, height//2 - 30, 200, 30, BLACK))  # центральная платформа
 platforms.append(Platform(screen, 180, 160, 150, 30, BLACK))  # левая верхняя платформа
 platforms.append(Platform(screen, 550, 160, 150, 30, BLACK))  # правая верхняя платформа
-platforms.append(Platform(screen, 180, 400, 150, 30, BLACK))  # левая нижняя платформа
-platforms.append(Platform(screen, 550, 400, 150, 30, BLACK))  # правая нижняя платформа
+platforms.append(Platform(screen, 180, 390, 150, 30, BLACK))  # левая нижняя платформа
+platforms.append(Platform(screen, 550, 390, 150, 30, BLACK))  # правая нижняя платформа
 platforms.append(Platform(screen, 369, 30, 150, 70, BLACK))  # самая верхняя платформа
 
+
+spikes = []
+
+
+class Spike:
+    def __init__(self, x, y, screen, color):
+        self.x = x
+        self.y = y
+        self.screen = screen
+        self.color = color
+
+    def drow(self):
+        pg.draw.rect(self.screen, self.color, (self.x, self.y, 15, 15))
+
+
+#spikes.append(Spike())
 
 fps = 60
 fpsClock = pg.time.Clock()
