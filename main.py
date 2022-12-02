@@ -1,9 +1,9 @@
-#import models.menu as menu
 import models.menu as menu
+import models.level as level
 import sys
 import pygame as pg
 import player
-width, height = 640, 480
+width, height = 900, 600
 screen = pg.display.set_mode((width, height))
 hero=player.Player(100,100,screen)
 fps = 60
@@ -12,14 +12,13 @@ pg.init()
 hero.draw(screen)
 
 theme = menu.Theme()
-New_game_button = menu.Button(120, 70, 400, 100, 'New Game', menu.new_game)
+New_game_button = menu.Button(120, 70, 400, 100, 'New Game', level.start_game)
 Exit_game_button = menu.Button(120, 180, 400, 100, 'Exit game', menu.exit_game)
 Resume_game_button = menu.Button(120, 290, 400, 100, 'Resume game', menu.resume_game)
 
 objects = [New_game_button, Exit_game_button, Resume_game_button]
 
 while True:
-    #menu.theme()
     theme.init_theme(screen)
     for event in pg.event.get():
         if event.type == pg.QUIT:

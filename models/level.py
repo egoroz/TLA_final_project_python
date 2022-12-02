@@ -94,19 +94,19 @@ fpsClock = pg.time.Clock()
 finished = False
 win = False
 
-while not finished:
-    screen.fill(WHITE)
-    for event in pg.event.get():
-        if event.type == pg.QUIT:
-            finished = True
-    for platform in platforms:
-        platform.draw()
-    for spike in spikes:
-        spike.draw()
-    if check_passage():
-        pass
-        #FIXME: когда уровень пройден нужно открыть дверь
+def start_game():
+    finished = False
+    while not finished:
+        screen.fill(WHITE)
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                finished = True
+        for platform in platforms:
+            platform.draw()
+        for spike in spikes:
+            spike.draw()
+        if check_passage():
+            pass
+            #FIXME: когда уровень пройден нужно открыть дверь
 
-    pg.display.update()
-
-pg.quit()
+        pg.display.update()

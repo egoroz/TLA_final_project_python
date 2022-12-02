@@ -4,7 +4,6 @@ import os
 
 BLACK = (0, 0, 0)
 
-
 class Theme:
 
     def __init__(self, image_path = 'background.png'):
@@ -14,19 +13,6 @@ class Theme:
     def init_theme(self, screen):
         screen.fill(BLACK)
         screen.blit(self.background, self.background_rect)
-
-# background = pg.image.load(path.join('background.png')).convert()
-
-
-# pg.init()
-# pg.display.set_mode((800, 600))
-# pg.display.update()
-
-def theme(screen):
-    '''Добавляет фон'''
-    screen.fill(BLACK)
-    screen.blit(background, background_rect)
-
 
 objects = []
 
@@ -95,6 +81,3 @@ def resume_game():
     '''Продолжить с предыдущего сохранения'''
     print('Resume')  # Аналогично ждет кода игры
 
-# New_game_button = Button(120, 70, 400, 100, 'New Game', new_game)
-# Exit_game_button = Button(120, 180, 400, 100, 'Exit game', exit_game)
-# Resume_game_button = Button(120, 290, 400, 100, 'Resume game', resume_game)
