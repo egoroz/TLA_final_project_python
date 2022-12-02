@@ -23,6 +23,8 @@ class Platform:
     def draw(self):
         pg.draw.rect(self.screen, self.color, (self.x, self.y, self.xx, self.yy))
 
+    def move(self):
+        self.x -= 0.1
 
 
 
@@ -39,6 +41,9 @@ class Spike:
 
     def draw(self):
         pg.draw.rect(self.screen, self.color, (self.x, self.y, self.a, self.a))
+
+    def move(self):
+        self.x -= 0.1
 
 
 with open('objects.json', 'r') as file:
@@ -63,20 +68,24 @@ fpsClock = pg.time.Clock()
 finished = False
 
 while not finished:
+
     screen.fill(WHITE)
     for event in pg.event.get():
         if event.type == pg.QUIT:
             finished = True
+
     for platform in platforms:
         platform.draw()
     for spike in spikes:
         spike.draw()
+
     if check_passage():
-        pass
         #FIXME: когда уровень пройден нужно открыть дверь
-    # with open('objects.json', 'r') as file:
-    #     data = json.load(file)
-    #     print(data)
+        for el in platforms:
+            el.move()
+        for el in spikes:
+            el.move()
+
     pg.display.update()
 
 pg.quit()
