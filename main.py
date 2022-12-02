@@ -2,7 +2,7 @@ import models.menu as menu
 import models.level as level
 import sys
 import pygame as pg
-import player
+import models.player as player
 
 width, height = 900, 600
 screen = pg.display.set_mode((width, height))
@@ -24,8 +24,7 @@ while True:
     for event in pg.event.get():
         if event.type == pg.QUIT:
             pg.quit()
-        
-
+    
     for object in objects:
         object.process(screen)
 

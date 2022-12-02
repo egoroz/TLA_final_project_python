@@ -5,18 +5,22 @@ import os
 BLACK = (0, 0, 0)
 
 class Theme:
+    '''Конструктор класса Theme
+    Args:
+    image_path - фоновая картинка
+    '''
 
     def __init__(self, image_path = 'background.png'):
         self.background = pg.image.load(os.path.join(os.getcwd(), image_path)).convert()
         self.background_rect = self.background.get_rect()
 
     def init_theme(self, screen):
+        '''Отрисовывает фон'''
+
         screen.fill(BLACK)
         screen.blit(self.background, self.background_rect)
 
-objects = []
-
-class Button():
+class Button:
     '''Конструктор класса Button
     Args: 
     x - положение кнопки по х
@@ -48,11 +52,11 @@ class Button():
 
         self.alreadyPressed = False
 
-        objects.append(self)
-
     def process(self, screen):
         '''Проверяет положение мыши, меняет цвет при наведении, при нажатии выпоняется функция кнопки'''
+        
         mousePos = pg.mouse.get_pos()
+
         self.buttonSurface.fill(self.fillColors['normal'])
         if self.buttonRect.collidepoint(mousePos):
             self.buttonSurface.fill(self.fillColors['hover'])
@@ -63,15 +67,12 @@ class Button():
                     self.alreadyPressed = True
             else:
                 self.alreadyPressed = False
+
         self.buttonSurface.blit(self.buttonSurf, [
             self.buttonRect.width/2 - self.buttonSurf.get_rect().width/2,
             self.buttonRect.height/2 - self.buttonSurf.get_rect().height/2
         ])
         screen.blit(self.buttonSurface, self.buttonRect)
-
-def new_game():
-    '''Начинает новую игру'''
-    print('New')  # Ожидает кода, пока так
 
 def exit_game():
     '''Выход из игры'''
