@@ -2,7 +2,9 @@ import sys
 import pygame as pg
 from os import path
 
-pg.display.init()
+width, height = 640, 480
+screen = pg.display.set_mode((width, height))
+
 background = pg.image.load(path.join('background.png')).convert()
 background_rect = background.get_rect()
 pg.display.update()
@@ -11,7 +13,7 @@ BLACK = (0, 0, 0)
 
 pg.init()
 
-def theme(screen):
+def theme():
     '''Добавляет фон'''
     screen.fill(BLACK)
     screen.blit(background, background_rect)
@@ -52,7 +54,7 @@ class Button():
 
         objects.append(self)
 
-    def process(self, screen):
+    def process(self):
         '''Проверяет положение мыши, меняет цвет при наведении, при нажатии выпоняется функция кнопки'''
         mousePos = pg.mouse.get_pos()
         self.buttonSurface.fill(self.fillColors['normal'])
@@ -71,30 +73,18 @@ class Button():
         ])
         screen.blit(self.buttonSurface, self.buttonRect)
 
-#def new_game():
-   # '''Начинает новую игру'''
-   # print('New')  # Ожидает кода, пока так
+def new_game():
+    '''Начинает новую игру'''
+    print('New')  # Ожидает кода, пока так
 
-#def exit_game():
-    #'''Выход из игры'''
-    #pg.quit()
+def exit_game():
+    '''Выход из игры'''
+    pg.quit()
 
-#def resume_game():
-    #'''Продолжить с предыдущего сохранения'''
-   # print('Resume')  # Аналогично ждет кода игры
+def resume_game():
+    '''Продолжить с предыдущего сохранения'''
+    print('Resume')  # Аналогично ждет кода игры
 
-#New_game_button = Button(120, 70, 400, 100, 'New Game', new_game)
-#Exit_game_button = Button(120, 180, 400, 100, 'Exit game', exit_game)
-#Resume_game_button = Button(120, 290, 400, 100, 'Resume game', resume_game)
-
-def start_menu(screen, fpsClock, fps):
-    theme(screen)
-    for event in pg.event.get():
-        if event.type == pg.QUIT:
-            pg.quit()
-
-    for object in objects:
-        object.process(screen)
-
-    pg.display.flip()
-    fpsClock.tick(fps)
+New_game_button = Button(120, 70, 400, 100, 'New Game', new_game)
+Exit_game_button = Button(120, 180, 400, 100, 'Exit game', exit_game)
+Resume_game_button = Button(120, 290, 400, 100, 'Resume game', resume_game)
