@@ -1,23 +1,32 @@
 import sys
 import pygame as pg
-from os import path
-
-
-
-background = pg.image.load(path.join('background.png')).convert()
-background_rect = background.get_rect()
-pg.display.update()
+import os
 
 BLACK = (0, 0, 0)
 
-pg.init()
 
-def theme():
+class Theme:
+
+    def __init__(self, image_path = 'background.png'):
+        self.background = pg.image.load(os.path.join(os.getcwd(), image_path)).convert()
+        self.background_rect = self.background.get_rect()
+
+    def init_theme(self, screen):
+        screen.fill(BLACK)
+        screen.blit(self.background, self.background_rect)
+
+# background = pg.image.load(path.join('background.png')).convert()
+
+
+# pg.init()
+# pg.display.set_mode((800, 600))
+# pg.display.update()
+
+def theme(screen):
     '''Добавляет фон'''
     screen.fill(BLACK)
     screen.blit(background, background_rect)
 
-font = pg.font.SysFont('Arial', 40)
 
 objects = []
 
@@ -31,12 +40,14 @@ class Button():
     buttonText - текст на кнопке
     onclickFunction - функция кнопки
     '''
+
     def __init__(self, x, y, width, height, buttonText='Button', onclickFunction=None):
         self.x = x
         self.y = y
         self.width = width
         self.height = height
         self.onclickFunction = onclickFunction
+        self.font = pg.font.SysFont('Arial', 40)
 
         self.fillColors = {
             'normal': '#ffffff',
@@ -47,13 +58,13 @@ class Button():
         self.buttonSurface = pg.Surface((self.width, self.height))
         self.buttonRect = pg.Rect(self.x, self.y, self.width, self.height)
 
-        self.buttonSurf = font.render(buttonText, True, (20, 20, 20))
+        self.buttonSurf = self.font.render(buttonText, True, (20, 20, 20))
 
         self.alreadyPressed = False
 
         objects.append(self)
 
-    def process(self):
+    def process(self, screen):
         '''Проверяет положение мыши, меняет цвет при наведении, при нажатии выпоняется функция кнопки'''
         mousePos = pg.mouse.get_pos()
         self.buttonSurface.fill(self.fillColors['normal'])
@@ -84,6 +95,6 @@ def resume_game():
     '''Продолжить с предыдущего сохранения'''
     print('Resume')  # Аналогично ждет кода игры
 
-New_game_button = Button(120, 70, 400, 100, 'New Game', new_game)
-Exit_game_button = Button(120, 180, 400, 100, 'Exit game', exit_game)
-Resume_game_button = Button(120, 290, 400, 100, 'Resume game', resume_game)
+# New_game_button = Button(120, 70, 400, 100, 'New Game', new_game)
+# Exit_game_button = Button(120, 180, 400, 100, 'Exit game', exit_game)
+# Resume_game_button = Button(120, 290, 400, 100, 'Resume game', resume_game)
