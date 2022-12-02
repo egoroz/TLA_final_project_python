@@ -2,8 +2,7 @@ import sys
 import pygame as pg
 from os import path
 
-width, height = 640, 480
-screen = pg.display.set_mode((width, height))
+
 
 background = pg.image.load(path.join('background.png')).convert()
 background_rect = background.get_rect()
