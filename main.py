@@ -14,6 +14,7 @@ while True:
     for event in pg.event.get():
         if event.type == pg.QUIT:
             pg.quit()
+        
 
     #for object in menu.objects:
      #   object.process()
