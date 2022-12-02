@@ -33,11 +33,11 @@ class Button():
         self.width = width
         self.height = height
         self.onclickFunction = onclickFunction
-        self.font = pg.font.SysFont('Arial', 40)
+        self.font = pg.font.SysFont('Monotype Corsiva', 40)
 
         self.fillColors = {
-            'normal': '#ffffff',
-            'hover': '#666666',
+            'normal': '#FFE4B5',
+            'hover': '#778899',
             'pressed': '#333333',
         }
 
