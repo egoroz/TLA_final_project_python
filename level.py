@@ -1,5 +1,3 @@
-import models.menu as menu
-import sys
 import pygame as pg
 
 pg.init()
@@ -84,11 +82,17 @@ for i in range(3):
     spikes.append(Spike(screen, 30, height // 2.5 - 65 - 25 * i, CYAN))  # шип слева сверху
 # добавить еще шипов, чтобы жизнь медом не казалась ;)
 
+
+def check_passage():
+    #FIXME: Условие при котором уровень будет пройден return True
+    return False
+
+
 fps = 60
 fpsClock = pg.time.Clock()
 
-
 finished = False
+win = False
 
 while not finished:
     screen.fill(WHITE)
@@ -99,6 +103,10 @@ while not finished:
         platform.draw()
     for spike in spikes:
         spike.draw()
+    if check_passage():
+        pass
+        #FIXME: когда уровень пройден нужно открыть дверь
+
     pg.display.update()
 
 pg.quit()
