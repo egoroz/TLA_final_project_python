@@ -1,112 +1,105 @@
 import pygame as pg
+import json
 
 pg.init()
-width, height = 900, 600
-screen = pg.display.set_mode((width, height))
 
-platforms = []
+#width, height = 1920//2, 1080//2
+#sys_width, sys_height = pg.display.Info().current_w, pg.display.Info().current_h
+#scales = (sys_width/width, sys_height/height)
+#screen = pg.display.set_mode((sys_width, sys_height))
+
 WHITE = (200, 200, 200)
 CYAN = (0, 150, 150)
 BLACK = (0, 0, 0)
 BROWN = (100, 50, 20)
 
+def scale_objects(objects, scales):
+    scale_x, scale_y = scales
+
+    for object in objects:
+        object.x *= scale_x
+        object.xx *= scale_x
+        object.y *= scale_y
+        object.yy *= scale_y
+
+
 class Platform:
-    def __init__(self, screen, x1, y1, x2, y2, color):
-        self.x1 = x1
-        self.y1 = y1
-        self.x2 = x2
-        self.y2 = y2
-        self.color = color
+    def __init__(self, screen, x, y, xx, yy):
+        self.x = x
+        self.y = y
+        self.xx = xx
+        self.yy = yy
+        self.color = BLACK
         self.screen = screen
 
     def draw(self):
-        pg.draw.rect(self.screen, self.color, (self.x1, self.y1, self.x2, self.y2))
+        pg.draw.rect(self.screen, self.color, (self.x, self.y, self.xx, self.yy))
 
-
-platforms.append(Platform(screen, 0, 0, width, 30, BLACK))  # верхняя граница
-platforms.append(Platform(screen, 0, 0, 30, height//2.5, BLACK))  # левая верхняя граница
-platforms.append(Platform(screen, 0, height//1.7, 30, height, BLACK))  # левая нижняя граница
-platforms.append(Platform(screen, width-30, 0, width, height//2.5, BLACK))  # правая верхняя граница
-platforms.append(Platform(screen, width-30, height//1.7, width, height, BLACK))  # правая нижняя граница
-platforms.append(Platform(screen, 0, height-70, width, height, BLACK))  # нижняя граница
-platforms.append(Platform(screen, 30, height//2.5 - 30, width // 9, 30, BLACK))  # коридор слева верх
-platforms.append(Platform(screen, 30, height//1.7, width // 9, 30, BLACK))  # коридор слева низ
-platforms.append(Platform(screen, width-30 - width // 9, height//2.5 - 30, width // 9, 30, BLACK))  # коридор справа верх
-platforms.append(Platform(screen, width-30 - width // 9, height//1.7, width // 9, 30, BLACK))  # коридор справа низ
-platforms.append(Platform(screen, width//2 - 100, height//2 - 30, 200, 30, BLACK))  # центральная платформа
-platforms.append(Platform(screen, 180, 160, 150, 30, BLACK))  # левая верхняя платформа
-platforms.append(Platform(screen, 550, 160, 150, 30, BLACK))  # правая верхняя платформа
-platforms.append(Platform(screen, 180, 390, 150, 30, BLACK))  # левая нижняя платформа
-platforms.append(Platform(screen, 550, 390, 150, 30, BLACK))  # правая нижняя платформа
-platforms.append(Platform(screen, 369, 30, 150, 70, BLACK))  # самая верхняя платформа
-platforms.append(Platform(screen, 369, height - 120, 150, 50, BLACK))  # самая нижняя платформа
-
-
-spikes = []
+    def move(self):
+        self.x -= 0.1
 
 
 class Spike:
-    def __init__(self, screen, x, y, color):
+    def __init__(self, screen, x, y, a, color=CYAN):
         self.x = x
         self.y = y
+        self.xx = 25
+        self.yy = 25
         self.screen = screen
         self.color = color
 
     def draw(self):
-        pg.draw.rect(self.screen, self.color, (self.x, self.y, 25, 25))
+        pg.draw.rect(self.screen, self.color, (self.x, self.y, self.xx, self.yy))
 
+    def move(self):
+        self.x -= 0.1
 
-spikes.append(Spike(screen, 210, 190, CYAN))  # шип на левой верхней платформе
-spikes.append(Spike(screen, 210 + 25, 190, CYAN))  # шип на левой верхней платформе
-spikes.append(Spike(screen, 210 + 50, 190, CYAN))  # шип на левой верхней платформе
-
-spikes.append(Spike(screen, 600, 190, CYAN))  # шип на правой верхней платформе
-spikes.append(Spike(screen, 600 + 25, 190, CYAN))  # шип на правой верхней платформе
-
-spikes.append(Spike(screen, 369 - 25, height - 95, CYAN))  # шип внизу
-spikes.append(Spike(screen, 494 + 25, height - 95, CYAN))  # шип внизу
-
-for i in range(3):
-        spikes.append(Spike(screen, width//2 - 100 + 50 + 25*i, height//2, CYAN))  # шип в центре
-
-for i in range(5):
-    spikes.append(Spike(screen, 30, height//1.7 + 43+ 25*i, CYAN))  # шип слева внизу
-
-for i in range(6):
-    spikes.append(Spike(screen, width - 30 - 25, height//2.5 - 70 - 25*i, CYAN))  # шип справа сверху
-
-for i in range(5):
-    spikes.append(Spike(screen, width - 30 - 25, height//1.7 + 43+ 25*i, CYAN))  # шип справа внизу
-
-for i in range(3):
-    spikes.append(Spike(screen, 30, height // 2.5 - 65 - 25 * i, CYAN))  # шип слева сверху
-# добавить еще шипов, чтобы жизнь медом не казалась ;)
-
+def read_data(screen, platforms, spikes):
+    with open('objects.json', 'r') as file:
+        data = json.load(file)
+        count_of_platforms = len(data[0]['platform'])
+        for i in range(count_of_platforms):
+            platform = Platform(screen, **data[0]['platform'][i])
+            platforms.append(platform)
+        count_of_spikes = len(data[1]['spike'])
+        for i in range(count_of_spikes):
+            spike = Spike(screen, **data[1]['spike'][i])
+            spikes.append(spike)
 
 def check_passage():
     #FIXME: Условие при котором уровень будет пройден return True
     return False
 
 
-fps = 60
-fpsClock = pg.time.Clock()
+#scale_objects(platforms, scales)
+#scale_objects(spikes, scales)
 
-finished = False
-win = False
+class Game:
 
-def start_game():
-    finished = False
-    while not finished:
-        screen.fill(WHITE)
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                finished = True
-        for platform in platforms:
-            platform.draw()
-        for spike in spikes:
-            spike.draw()
-        if check_passage():
-            pass
-            #FIXME: когда уровень пройден нужно открыть дверь
+    def __init__(self, screen, platforms, spikes):
+        self.screen = screen
+        self.platforms = platforms
+        self.spikes = spikes
 
-        pg.display.update()
+    def init_game(self):
+        finished = False
+        while not finished:
+            self.screen.fill(WHITE)
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    finished = True
+
+            for platform in self.platforms:
+                platform.draw()
+            for spike in self.spikes:
+                spike.draw()
+
+            if check_passage():
+                #FIXME: когда уровень пройден нужно открыть дверь
+                for el in self.platforms:
+                    el.move()
+                for el in self.spikes:
+                    el.move()
+
+            pg.display.update()
+

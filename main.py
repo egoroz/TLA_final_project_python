@@ -4,18 +4,29 @@ import sys
 import pygame as pg
 import models.player as player
 
-width, height = 900, 600
-screen = pg.display.set_mode((width, height))
-hero=player.Player(100,100,screen)
+width, height = 1920//2, 1080//2
+sys_width, sys_height = pg.display.Info().current_w, pg.display.Info().current_h
+scales = (sys_width/width, sys_height/height)
+screen = pg.display.set_mode((sys_width, sys_height))
+
+platforms = []
+spikes = []
+
+level.read_data(screen, platforms, spikes)
+level.scale_objects(platforms, scales)
+level.scale_objects(spikes, scales)
+
+hero = player.Player(100,100,screen)
 fps = 60
 fpsClock = pg.time.Clock()
 pg.init()
 hero.draw(screen)
 
 theme = menu.Theme()
-New_game_button = menu.Button(240, 330, 400, 80, 'New Game', level.start_game)
-Exit_game_button = menu.Button(240, 420, 400, 80, 'Exit game', menu.exit_game)
-Resume_game_button = menu.Button(240, 510, 400, 80, 'Resume game', menu.resume_game)
+game = level.Game(screen, platforms, spikes)
+New_game_button = menu.Button(960, 600, 400, 80, game.init_game, 'New Game')
+Exit_game_button = menu.Button(960, 700, 400, 80, menu.exit_game, 'Exit game')
+Resume_game_button = menu.Button(960, 800, 400, 80, menu.resume_game, 'Resume game')
 
 objects = [New_game_button, Exit_game_button, Resume_game_button]
 

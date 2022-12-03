@@ -31,7 +31,7 @@ class Button:
     onclickFunction - функция кнопки
     '''
 
-    def __init__(self, x, y, width, height, buttonText='Button', onclickFunction=None):
+    def __init__(self, x, y, width, height, onclickFunction, buttonText='Button'):
         self.x = x
         self.y = y
         self.width = width
@@ -80,5 +80,5 @@ def exit_game():
 
 def resume_game():
     '''Продолжить с предыдущего сохранения'''
-    print('Resume')  # Аналогично ждет кода игры
+    print('Resume')  # Ждет кода игры
 
