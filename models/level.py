@@ -3,17 +3,13 @@ import json
 
 pg.init()
 
-#width, height = 1920//2, 1080//2
-#sys_width, sys_height = pg.display.Info().current_w, pg.display.Info().current_h
-#scales = (sys_width/width, sys_height/height)
-#screen = pg.display.set_mode((sys_width, sys_height))
-
 WHITE = (200, 200, 200)
 CYAN = (0, 150, 150)
 BLACK = (0, 0, 0)
 BROWN = (100, 50, 20)
 
 def scale_objects(objects, scales):
+    '''Скейлит объекты под разрешение экрана пользователя'''
     scale_x, scale_y = scales
 
     for object in objects:
@@ -22,8 +18,15 @@ def scale_objects(objects, scales):
         object.y *= scale_y
         object.yy *= scale_y
 
-
 class Platform:
+    '''Конструктор класса Platform
+    Args:
+    screen -
+    x - 
+    y - 
+    xx - 
+    yy -
+    '''
     def __init__(self, screen, x, y, xx, yy):
         self.x = x
         self.y = y
@@ -33,13 +36,22 @@ class Platform:
         self.screen = screen
 
     def draw(self):
+        '''Рисует платформы на уровне'''
         pg.draw.rect(self.screen, self.color, (self.x, self.y, self.xx, self.yy))
 
     def move(self):
+        '''Движение платформ при прохождении'''
         self.x -= 0.1
 
 
 class Spike:
+    '''Конструктор класса Spike
+    Args:
+    screen - 
+    x -
+    y -
+    color -
+    '''
     def __init__(self, screen, x, y, a, color=CYAN):
         self.x = x
         self.y = y
@@ -49,13 +61,16 @@ class Spike:
         self.color = color
 
     def draw(self):
+        '''Рисует шипы на уровне'''
         pg.draw.rect(self.screen, self.color, (self.x, self.y, self.xx, self.yy))
 
     def move(self):
+        '''Движение шипов при прохождении'''
         self.x -= 0.1
 
-def read_data(screen, platforms, spikes):
-    with open('objects.json', 'r') as file:
+def read_data(screen, platforms, spikes, input_file):
+    '''Считывает данные о расположении платформ и шипов с файла input_file'''
+    with open(input_file, 'r') as file:
         data = json.load(file)
         count_of_platforms = len(data[0]['platform'])
         for i in range(count_of_platforms):
@@ -67,14 +82,17 @@ def read_data(screen, platforms, spikes):
             spikes.append(spike)
 
 def check_passage():
+    '''Проверяет прохождение уровня'''
     #FIXME: Условие при котором уровень будет пройден return True
     return False
 
-
-#scale_objects(platforms, scales)
-#scale_objects(spikes, scales)
-
 class Game:
+    '''Конструктор класса Game
+    Args:
+    screen - экран
+    platforms - список платформ
+    spikes - список шипов
+    '''
 
     def __init__(self, screen, platforms, spikes):
         self.screen = screen
@@ -82,6 +100,7 @@ class Game:
         self.spikes = spikes
 
     def init_game(self):
+        '''Запуск игры'''
         finished = False
         while not finished:
             self.screen.fill(WHITE)

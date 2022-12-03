@@ -12,7 +12,7 @@ screen = pg.display.set_mode((sys_width, sys_height))
 platforms = []
 spikes = []
 
-level.read_data(screen, platforms, spikes)
+level.read_data(screen, platforms, spikes, 'objects.json')
 level.scale_objects(platforms, scales)
 level.scale_objects(spikes, scales)
 
