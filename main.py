@@ -24,9 +24,9 @@ hero.draw(screen)
 
 theme = menu.Theme('background.png', sys_width, sys_height)
 game = level.Game(screen, platforms, spikes)
-New_game_button = menu.Button(960, 600, 400, 80, game.init_game, 'New Game')
-Exit_game_button = menu.Button(960, 700, 400, 80, menu.exit_game, 'Exit game')
-Resume_game_button = menu.Button(960, 800, 400, 80, menu.resume_game, 'Resume game')
+New_game_button = menu.Button(280, 320, 380, 60, scales, game.init_game, 'New Game')
+Exit_game_button = menu.Button(280, 390, 380, 60, scales, menu.exit_game, 'Exit game')
+Resume_game_button = menu.Button(280, 460, 380, 60, scales, menu.resume_game, 'Resume game')
 
 objects = [New_game_button, Exit_game_button, Resume_game_button]
 

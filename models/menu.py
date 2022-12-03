@@ -8,6 +8,8 @@ class Theme:
     '''Конструктор класса Theme
     Args:
     image_path - фоновая картинка
+    sys_width - ширина экрана пользователя
+    sys_height - высота экрана пользователя
     '''
 
     def __init__(self, image_path, sys_width, sys_height):
@@ -32,11 +34,13 @@ class Button:
     onclickFunction - функция кнопки
     '''
 
-    def __init__(self, x, y, width, height, onclickFunction, buttonText='Button'):
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
+    def __init__(self, x, y, width, height, scales, onclickFunction, buttonText='Button'):
+        scale_x, scale_y = scales
+        
+        self.x = x*scale_x
+        self.y = y*scale_y
+        self.width = width*scale_x
+        self.height = height*scale_y
         self.onclickFunction = onclickFunction
         self.font = pg.font.SysFont('Monotype Corsiva', 40)
 
