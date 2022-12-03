@@ -10,8 +10,9 @@ class Theme:
     image_path - фоновая картинка
     '''
 
-    def __init__(self, image_path = 'background.png'):
+    def __init__(self, image_path, sys_width, sys_height):
         self.background = pg.image.load(os.path.join(os.getcwd(), image_path)).convert()
+        self.background = pg.transform.scale(self.background, (sys_width, sys_height))
         self.background_rect = self.background.get_rect()
 
     def init_theme(self, screen):

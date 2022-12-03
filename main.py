@@ -22,7 +22,7 @@ fpsClock = pg.time.Clock()
 pg.init()
 hero.draw(screen)
 
-theme = menu.Theme()
+theme = menu.Theme('background.png', sys_width, sys_height)
 game = level.Game(screen, platforms, spikes)
 New_game_button = menu.Button(960, 600, 400, 80, game.init_game, 'New Game')
 Exit_game_button = menu.Button(960, 700, 400, 80, menu.exit_game, 'Exit game')
