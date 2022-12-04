@@ -87,3 +87,15 @@ def resume_game():
     '''Продолжить с предыдущего сохранения'''
     print('Resume')  # Ждет кода игры
 
+def start_buttons(screen, scales, func_1, func_2, func_3):
+    New_game_button = Button(280, 320, 380, 60, scales, func_1, 'New Game')
+    Exit_game_button = Button(280, 390, 380, 60, scales, func_2, 'Exit game')
+    Resume_game_button = Button(280, 460, 380, 60, scales, func_3, 'Resume game')
+
+    objects = [New_game_button, Exit_game_button, Resume_game_button]
+    for object in objects:
+        object.process(screen)
+
+def pause_button(screen, scales, func):
+    Pause_button = Button(60, 60, 10, 10, scales, func, "Pause")
+    Pause_button.process(screen)

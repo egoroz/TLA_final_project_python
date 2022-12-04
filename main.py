@@ -23,21 +23,14 @@ pg.init()
 hero.draw(screen)
 
 theme = menu.Theme('background.png', sys_width, sys_height)
-game = level.Game(screen, platforms, spikes)
-New_game_button = menu.Button(280, 320, 380, 60, scales, game.init_game, 'New Game')
-Exit_game_button = menu.Button(280, 390, 380, 60, scales, menu.exit_game, 'Exit game')
-Resume_game_button = menu.Button(280, 460, 380, 60, scales, menu.resume_game, 'Resume game')
-
-objects = [New_game_button, Exit_game_button, Resume_game_button]
+game = level.Game(screen, platforms, spikes, menu.pause_button(screen, scales, menu.exit_game))
 
 while True:
     theme.init_theme(screen)
+    menu.start_buttons(screen, scales, game.init_game, menu.exit_game, menu.resume_game)
     for event in pg.event.get():
         if event.type == pg.QUIT:
             pg.quit()
     
-    for object in objects:
-        object.process(screen)
-
-    pg.display.flip()
+    pg.display.update()
     fpsClock.tick(fps)

@@ -94,11 +94,12 @@ class Game:
     spikes - список шипов
     '''
 
-    def __init__(self, screen, platforms, spikes):
+    def __init__(self, screen, platforms, spikes, func):
         self.screen = screen
         self.platforms = platforms
         self.spikes = spikes
-
+        self.func = func
+       
     def init_game(self):
         '''Запуск игры'''
         finished = False
@@ -112,13 +113,14 @@ class Game:
                 platform.draw()
             for spike in self.spikes:
                 spike.draw()
-
+            
             if check_passage():
                 #FIXME: когда уровень пройден нужно открыть дверь
                 for el in self.platforms:
                     el.move()
                 for el in self.spikes:
                     el.move()
-
+           
+                
+            self.func
             pg.display.update()
-
