@@ -28,6 +28,7 @@ game = level.Game(screen, platforms, spikes, menu.pause_button(screen, scales, m
 while True:
     theme.init_theme(screen)
     menu.start_buttons(screen, scales, game.init_game, menu.exit_game, menu.resume_game)
+    menu.pause_button(screen, scales, menu.exit_game)  ## На этом экране рисует, но через init_game не выводит на экран с уровнем через self.func 
     for event in pg.event.get():
         if event.type == pg.QUIT:
             pg.quit()

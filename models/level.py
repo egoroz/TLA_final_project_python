@@ -121,6 +121,7 @@ class Game:
                 for el in self.spikes:
                     el.move()
            
-                
-            self.func
-            pg.display.update()
+            pg.display.update()    
+        self.func
+        pg.display.update()
+            
