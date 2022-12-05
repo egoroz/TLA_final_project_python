@@ -97,5 +97,5 @@ def start_buttons(screen, scales, func_1, func_2, func_3):
         object.process(screen)
 
 def pause_button(screen, scales, func):
-    Pause_button = Button(60, 60, 10, 10, scales, func, "Pause")
+    Pause_button = Button(60, 60, 50, 30, scales, func, "Pause")
     Pause_button.process(screen)

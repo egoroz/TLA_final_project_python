@@ -84,45 +84,4 @@ def read_data(screen, platforms, spikes, input_file):
 def check_passage():
     '''Проверяет прохождение уровня'''
     #FIXME: Условие при котором уровень будет пройден return True
-    return False
-
-class Game:
-    '''Конструктор класса Game
-    Args:
-    screen - экран
-    platforms - список платформ
-    spikes - список шипов
-    '''
-
-    def __init__(self, screen, platforms, spikes, func):
-        self.screen = screen
-        self.platforms = platforms
-        self.spikes = spikes
-        self.func = func
-       
-    def init_game(self):
-        '''Запуск игры'''
-        self.func = True
-        pg.display.update()
-        finished = False
-        while not finished:
-            self.screen.fill(WHITE)
-            for event in pg.event.get():
-                if event.type == pg.QUIT:
-                    finished = True
-
-            for platform in self.platforms:
-                platform.draw()
-            for spike in self.spikes:
-                spike.draw()
-            
-            if check_passage():
-                #FIXME: когда уровень пройден нужно открыть дверь
-                for el in self.platforms:
-                    el.move()
-                for el in self.spikes:
-                    el.move()
-            pg.display.update()    
-        
-        
-            
+    return False   
