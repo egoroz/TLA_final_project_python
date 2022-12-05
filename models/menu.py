@@ -88,6 +88,7 @@ def resume_game():
     print('Resume')  # Ждет кода игры
 
 def start_buttons(screen, scales, func_1, func_2, func_3):
+    '''Отображает кнопки стартового меню'''
     New_game_button = Button(280, 320, 380, 60, scales, func_1, 'New Game')
     Exit_game_button = Button(280, 390, 380, 60, scales, func_2, 'Exit game')
     Resume_game_button = Button(280, 460, 380, 60, scales, func_3, 'Resume game')
@@ -96,6 +97,13 @@ def start_buttons(screen, scales, func_1, func_2, func_3):
     for object in objects:
         object.process(screen)
 
-def pause_button(screen, scales, func):
-    Pause_button = Button(60, 60, 50, 30, scales, func, "Pause")
-    Pause_button.process(screen)
+def game_buttons(screen, scales, func_1, func_2):
+    '''Отображает кнопки игрового экрана'''
+    Pause_button = Button(30, 30, 50, 30, scales, func_1, "Pause")
+    Hint_button = Button(90, 30, 50, 30, scales, func_2, "Hint")
+
+    objects = [Pause_button, Hint_button]
+    for object in objects:
+        object.process(screen)
+    
+

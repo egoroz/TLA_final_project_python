@@ -45,7 +45,7 @@ class Game:
         finished = False
         while not finished:
             self.screen.fill(WHITE)
-            menu.pause_button(screen, scales, menu.exit_game)
+            menu.game_buttons(screen, scales, menu.exit_game, menu.exit_game)  # Функции выхода из игры заменить на функции паузы и подсказки
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     finished = True
