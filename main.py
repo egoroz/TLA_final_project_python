@@ -25,13 +25,16 @@ hero.draw(screen)
 theme = menu.Theme('background.png', sys_width, sys_height)
 game = level.Game(screen, platforms, spikes, menu.pause_button(screen, scales, menu.exit_game))
 
-while True:
+finished = False
+
+while not finished:
     theme.init_theme(screen)
     menu.start_buttons(screen, scales, game.init_game, menu.exit_game, menu.resume_game)
     menu.pause_button(screen, scales, menu.exit_game)  ## На этом экране рисует, но через init_game не выводит на экран с уровнем через self.func 
     for event in pg.event.get():
         if event.type == pg.QUIT:
-            pg.quit()
-    
+            finished = True
     pg.display.update()
     fpsClock.tick(fps)
+
+pg.quit()
