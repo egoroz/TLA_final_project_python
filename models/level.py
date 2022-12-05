@@ -102,6 +102,8 @@ class Game:
        
     def init_game(self):
         '''Запуск игры'''
+        self.func = True
+        pg.display.update()
         finished = False
         while not finished:
             self.screen.fill(WHITE)
@@ -120,8 +122,7 @@ class Game:
                     el.move()
                 for el in self.spikes:
                     el.move()
-           
             pg.display.update()    
-        self.func
-        pg.display.update()
+        
+        
             
