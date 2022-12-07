@@ -14,7 +14,7 @@ WHITE = (200, 200, 200)
 platforms = []
 spikes = []
 
-level.read_data(screen, platforms, spikes, 'final_project\objects.json')
+level.read_data(screen, platforms, spikes, 'objects.json')
 level.scale_objects(platforms, scales)
 level.scale_objects(spikes, scales)
 
@@ -23,8 +23,7 @@ fps = 60
 fpsClock = pg.time.Clock()
 pg.init()
 
-
-theme = menu.Theme(r'final_project\background.png', sys_width, sys_height)
+theme = menu.Theme('background.png', sys_width, sys_height)
 
 finished = False
 d=2
@@ -45,11 +44,10 @@ class Game:
         self.screen = screen
         self.platforms = platforms
         self.spikes = spikes
-
+        
     def start_game(self):
         '''Запуск игры'''
         finished = False
-        
         while not finished:
             self.screen.fill(WHITE)
             menu.game_buttons(screen, scales, menu.exit_game, menu.exit_game)  # Функции выхода из игры заменить на функции паузы и подсказки
@@ -61,7 +59,8 @@ class Game:
                 platform.draw()
             for spike in self.spikes:
                 spike.draw()
-            hero.draw(screen)   
+            hero.draw(screen)
+                
             if level.check_passage():
                 #FIXME: когда уровень пройден нужно открыть дверь
                 for el in self.platforms:
@@ -69,45 +68,45 @@ class Game:
                 for el in self.spikes:
                     el.move()
             pg.display.update()
+        return True
 
 game = Game(screen, platforms, spikes)
-hero.draw(screen)
-while not finished:
-   # theme.init_theme(screen)
-    #menu.start_buttons(screen, scales, game.start_game, menu.exit_game, menu.resume_game)
-     screen.fill(WHITE)
-     for platform in platforms:
-                platform.draw()
-     for spike in spikes:
-                spike.draw()
-        
-    
-     #print( pg.Rect.colliderect(hero.rect,platforms[3].make_rect()))
-    # print(hero.rect.x,hero.rect.y,hero.rect.width,hero.rect.heightd)
-     for event in pg.event.get():
-        if event.type == pg.QUIT:
-            finished = True
-        elif event.type==pg.KEYDOWN:
-            if event.key==pg.K_UP:
-                up=True
-            if event.key==pg.K_LEFT:
-                left=True
-            if event.key==pg.K_RIGHT:
-                right=True
-            if event.key==pg.K_SPACE:
-                space=True
-        elif event.type==pg.KEYUP:
-            if event.key==pg.K_UP:
-                up=False
-            if event.key==pg.K_LEFT:
-                left=False
-            if event.key==pg.K_RIGHT:
-                right=False
-            if event.key==pg.K_SPACE:
-                space=False
-     hero.update(left,right,up,down,screen,platforms)  
-     pg.display.update()
-     fpsClock.tick(fps)
+pressed = False
 
+while not finished:
+    screen.fill(WHITE)
+    theme.init_theme(screen)
+    menu.start_buttons(screen, scales, game.start_game, menu.exit_game, menu.resume_game)
+    
+    for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    finished = True
+    if game.start_game == True:
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                finished = True
+            elif event.type==pg.KEYDOWN:
+                if event.key==pg.K_UP:
+                    up=True
+                if event.key==pg.K_LEFT:
+                    left=True
+                if event.key==pg.K_RIGHT:
+                    right=True
+                if event.key==pg.K_SPACE:
+                    space=True
+            elif event.type==pg.KEYUP:
+                if event.key==pg.K_UP:
+                    up=False
+                if event.key==pg.K_LEFT:
+                    left=False
+                if event.key==pg.K_RIGHT:
+                    right=False
+                if event.key==pg.K_SPACE:
+                    space=False
+        hero.update(left,right,up,down,screen,platforms)            
+    # print( pg.Rect.colliderect(hero.rect,platforms[3].make_rect()))
+    # print(hero.rect.x,hero.rect.y,hero.rect.width,hero.rect.heightd)
+    pg.display.update()
+    fpsClock.tick(fps)
 
 pg.quit()

@@ -17,7 +17,7 @@ class Player():
         self.jump=-10
         self.g=0.3
         self.land=False
-        self.image = pg.image.load(r'final_project\models\test2.png').convert_alpha()
+        self.image = pg.image.load('test2.png').convert_alpha()
        # self.image= self.image.convert_alpha(self.image)
         self.image = pg.transform.scale(self.image, (self.w, self.h))
         self.rect = self.image.get_rect()
