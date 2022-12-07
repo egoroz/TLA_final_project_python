@@ -16,13 +16,14 @@ class Player(pg.sprite.Sprite):
         self.image = pg.transform.scale(self.image, (50, 100))
         self.rect = self.image.get_rect()
     
-    def update(self, left, right, up, down):
+    def update(self, left, right, up, down,screen):
         '''Добавь докстринг'''
         if left:
             vx=max(-self.maxv, vx-self.ax)
         if right:
             vx=min(self.maxv, vx+self.ax)
         x += vx
+        self.draw(screen)
     
     def draw(self, screen):
         '''Добавь докстринг'''
