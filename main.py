@@ -18,7 +18,7 @@ level.read_data(screen, platforms, spikes, 'objects.json')
 level.scale_objects(platforms, scales)
 level.scale_objects(spikes, scales)
 
-hero = player.Player(100,100,screen)
+hero = player.Player(100, 100, screen)
 fps = 60
 fpsClock = pg.time.Clock()
 pg.init()
