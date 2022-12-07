@@ -14,7 +14,7 @@ WHITE = (200, 200, 200)
 platforms = []
 spikes = []
 
-level.read_data(screen, platforms, spikes, 'objects.json')
+level.read_data(screen, platforms, spikes, 'final_project\objects.json')
 level.scale_objects(platforms, scales)
 level.scale_objects(spikes, scales)
 
@@ -22,11 +22,17 @@ hero = player.Player(100, 100, screen)
 fps = 60
 fpsClock = pg.time.Clock()
 pg.init()
-hero.draw(screen)
 
-theme = menu.Theme('background.png', sys_width, sys_height)
+
+theme = menu.Theme(r'final_project\background.png', sys_width, sys_height)
 
 finished = False
+d=2
+left=False
+right=False
+up=False
+down=False
+space=False
 
 class Game:
     '''Конструктор класса Game
@@ -43,6 +49,7 @@ class Game:
     def start_game(self):
         '''Запуск игры'''
         finished = False
+        
         while not finished:
             self.screen.fill(WHITE)
             menu.game_buttons(screen, scales, menu.exit_game, menu.exit_game)  # Функции выхода из игры заменить на функции паузы и подсказки
@@ -54,7 +61,7 @@ class Game:
                 platform.draw()
             for spike in self.spikes:
                 spike.draw()
-                
+            hero.draw(screen)   
             if level.check_passage():
                 #FIXME: когда уровень пройден нужно открыть дверь
                 for el in self.platforms:
@@ -71,6 +78,25 @@ while not finished:
     for event in pg.event.get():
         if event.type == pg.QUIT:
             finished = True
+        elif event.type==pg.KEYDOWN:
+            if event.key==pg.K_UP:
+                up=True
+            if event.key==pg.K_LEFT:
+                left=True
+            if event.key==pg.K_RIGHT:
+                right=True
+            if event.key==pg.K_SPACE:
+                space=True
+        elif event.type==pg.KEYUP:
+            if event.key==pg.K_UP:
+                up=False
+            if event.key==pg.K_LEFT:
+                left=False
+            if event.key==pg.K_RIGHT:
+                right=False
+            if event.key==pg.K_SPACE:
+                space=False
+    hero.update(left,right,up,down,screen)  
     pg.display.update()
     fpsClock.tick(fps)
 
