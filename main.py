@@ -44,12 +44,18 @@ class Game:
         self.screen = screen
         self.platforms = platforms
         self.spikes = spikes
+        self.up = up
+        self.down = down
+        self.right = right
+        self.left = left
+        self.space = space
         
     def start_game(self):
         '''Запуск игры'''
         finished = False
         while not finished:
             self.screen.fill(WHITE)
+            hero.draw(screen)
             menu.game_buttons(screen, scales, menu.exit_game, menu.exit_game)  # Функции выхода из игры заменить на функции паузы и подсказки
             for event in pg.event.get():
                 if event.type == pg.QUIT:
@@ -59,51 +65,76 @@ class Game:
                 platform.draw()
             for spike in self.spikes:
                 spike.draw()
-            hero.draw(screen)
-                
+
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    finished = True
+                #elif event.type==pg.KEYDOWN:
+                  #  if event.key==pg.K_UP:
+                        #self.up = True
+                   # if event.key==pg.K_LEFT:
+                       # self.left = True
+                  #  if event.key==pg.K_RIGHT:
+                      #  self.right = True
+                   # if event.key==pg.K_SPACE:
+                      #  self.space = True
+               # elif event.type==pg.KEYUP:
+                   # if event.key==pg.K_UP:
+                        #self.up = False
+                   # if event.key==pg.K_LEFT:
+                      #  self.left = False
+                   # if event.key==pg.K_RIGHT:
+                        #self.right = False
+                   # if event.key==pg.K_SPACE:
+                       # self.space = False
+            #hero.update(self.left, self.right, self.up, self.down, self.screen, self.platforms)
+            
             if level.check_passage():
                 #FIXME: когда уровень пройден нужно открыть дверь
                 for el in self.platforms:
                     el.move()
                 for el in self.spikes:
                     el.move()
+
             pg.display.update()
-        return True
 
 game = Game(screen, platforms, spikes)
-pressed = False
 
 while not finished:
     screen.fill(WHITE)
-    theme.init_theme(screen)
-    menu.start_buttons(screen, scales, game.start_game, menu.exit_game, menu.resume_game)
+    #theme.init_theme(screen)
+    #menu.start_buttons(screen, scales, game.start_game, menu.exit_game, menu.resume_game)
     
+    for platform in platforms:
+        platform.draw()
+    for spike in spikes:
+        spike.draw()
+    for event in pg.event.get():
+        if event.type == pg.QUIT:
+            finished = True
+        elif event.type==pg.KEYDOWN:
+            if event.key==pg.K_UP:
+                up =True
+            if event.key==pg.K_LEFT:
+                left =True
+            if event.key==pg.K_RIGHT:
+                right =True
+            if event.key==pg.K_SPACE:
+                space =True
+        elif event.type==pg.KEYUP:
+            if event.key==pg.K_UP:
+                up=False
+            if event.key==pg.K_LEFT:
+                left = False
+            if event.key==pg.K_RIGHT:
+                right = False
+            if event.key==pg.K_SPACE:
+                space = False
+    hero.update(left,right,up,down,screen,platforms) 
     for event in pg.event.get():
                 if event.type == pg.QUIT:
                     finished = True
-    if game.start_game == True:
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                finished = True
-            elif event.type==pg.KEYDOWN:
-                if event.key==pg.K_UP:
-                    up=True
-                if event.key==pg.K_LEFT:
-                    left=True
-                if event.key==pg.K_RIGHT:
-                    right=True
-                if event.key==pg.K_SPACE:
-                    space=True
-            elif event.type==pg.KEYUP:
-                if event.key==pg.K_UP:
-                    up=False
-                if event.key==pg.K_LEFT:
-                    left=False
-                if event.key==pg.K_RIGHT:
-                    right=False
-                if event.key==pg.K_SPACE:
-                    space=False
-        hero.update(left,right,up,down,screen,platforms)            
+                
     # print( pg.Rect.colliderect(hero.rect,platforms[3].make_rect()))
     # print(hero.rect.x,hero.rect.y,hero.rect.width,hero.rect.heightd)
     pg.display.update()

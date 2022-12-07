@@ -32,7 +32,6 @@ class Player():
             self.vx=0
         if up:
             if self.land:
-                
                 self.vy=self.jump
                 
             
@@ -46,6 +45,7 @@ class Player():
         self.collision(platforms)
         self.rect= pg.Rect(self.x,self.y,self.w,self.h)
         self.draw(screen)
+    
     def collision(self,platforms):
         for pl in platforms:
             #print(pl)
