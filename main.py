@@ -18,7 +18,7 @@ level.read_data(screen, platforms, spikes, 'final_project\objects.json')
 level.scale_objects(platforms, scales)
 level.scale_objects(spikes, scales)
 
-hero = player.Player(100, 100, screen)
+hero = player.Player(300, 100, screen)
 fps = 60
 fpsClock = pg.time.Clock()
 pg.init()
@@ -71,11 +71,20 @@ class Game:
             pg.display.update()
 
 game = Game(screen, platforms, spikes)
-
+hero.draw(screen)
 while not finished:
-    theme.init_theme(screen)
-    menu.start_buttons(screen, scales, game.start_game, menu.exit_game, menu.resume_game)
-    for event in pg.event.get():
+   # theme.init_theme(screen)
+    #menu.start_buttons(screen, scales, game.start_game, menu.exit_game, menu.resume_game)
+     screen.fill(WHITE)
+     for platform in platforms:
+                platform.draw()
+     for spike in spikes:
+                spike.draw()
+        
+    
+     #print( pg.Rect.colliderect(hero.rect,platforms[3].make_rect()))
+    # print(hero.rect.x,hero.rect.y,hero.rect.width,hero.rect.heightd)
+     for event in pg.event.get():
         if event.type == pg.QUIT:
             finished = True
         elif event.type==pg.KEYDOWN:
@@ -96,9 +105,9 @@ while not finished:
                 right=False
             if event.key==pg.K_SPACE:
                 space=False
-    hero.update(left,right,up,down,screen)  
-    pg.display.update()
-    fpsClock.tick(fps)
+     hero.update(left,right,up,down,screen,platforms)  
+     pg.display.update()
+     fpsClock.tick(fps)
 
 
 pg.quit()

@@ -34,7 +34,8 @@ class Platform:
         self.yy = yy
         self.color = BLACK
         self.screen = screen
-
+    def make_rect(self):
+        return pg.Rect(self.x, self.y, self.xx, self.yy)
     def draw(self):
         '''Рисует платформы на уровне'''
         pg.draw.rect(self.screen, self.color, (self.x, self.y, self.xx, self.yy))
