@@ -27,6 +27,7 @@ hero.draw(screen)
 theme = menu.Theme('background.png', sys_width, sys_height)
 
 finished = False
+d=2
 
 class Game:
     '''Конструктор класса Game
