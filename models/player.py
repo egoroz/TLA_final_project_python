@@ -1,10 +1,12 @@
 import pygame as pg
-class Player():
+
+class Player:
+    
     ax = 0.5
     ay = 0.5
     maxv = 5
-    h=60
-    w=60
+    h = 60
+    w = 60
    
     def __init__(self, x, y, sc) -> None:
         '''Добавь докстринг'''
@@ -14,37 +16,13 @@ class Player():
         self.vy = 0
         self.ax = 1
         self.ay = 1
-        self.jump=-10
-        self.g=0.3
+        self.jump = -10
+        self.g = 0.3
         self.land=False
         self.image = pg.image.load('test2.png').convert_alpha()
        # self.image= self.image.convert_alpha(self.image)
         self.image = pg.transform.scale(self.image, (self.w, self.h))
         self.rect = self.image.get_rect()
-    
-    def update(self, left, right, up, down,screen,platforms):
-        '''Добавь докстринг'''
-        if left:
-            self.vx=max(-self.maxv, self.vx-self.ax)
-        if right:
-            self.vx=min(self.maxv, self.vx+self.ax)
-        if not left and not right:
-            self.vx=0
-        if up:
-            if self.land:
-                self.vy=self.jump
-                
-            
-        if not self.land:
-            self.vy+=self.g
-        self.x += self.vx
-       # print(self.vy)
-        self.y+=self.vy
-        
-        self.land=False
-        self.collision(platforms)
-        self.rect= pg.Rect(self.x,self.y,self.w,self.h)
-        self.draw(screen)
     
     def collision(self,platforms):
         for pl in platforms:
@@ -70,6 +48,28 @@ class Player():
         image_rect = self.image.get_rect()
         screen.blit(self.image, (self.x, self.y))
 
-
+    def update(self, left, right, up, down, screen, platforms):
+        '''Добавь докстринг'''
+        if left:
+            self.vx = max(-self.maxv, self.vx-self.ax)
+        if right:
+            self.vx = min(self.maxv, self.vx+self.ax)
+        if not left and not right:
+            self.vx = 0
+        if up:
+            if self.land:
+                self.vy = self.jump
+                
+            
+        if not self.land:
+            self.vy+=self.g
+        self.x+=self.vx
+       # print(self.vy)
+        self.y+=self.vy
+        
+        self.land = False
+        self.collision(platforms)
+        self.rect = pg.Rect(self.x,self.y,self.w,self.h)
+        self.draw(screen)
 
 
