@@ -13,10 +13,13 @@ WHITE = (200, 200, 200)
 
 platforms = []
 spikes = []
+button = [level.PushableButton(screen, 650, 355, 150, 30)]
+
 
 level.read_data(screen, platforms, spikes, 'objects.json')
 level.scale_objects(platforms, scales)
 level.scale_objects(spikes, scales)
+level.scale_objects(button, scales)
 
 hero = player.Player(300, 100, screen)
 fps = 60
@@ -56,9 +59,11 @@ class Game:
         while not finished:
             self.screen.fill(WHITE)
             menu.pause_game.has_been_called = False
-            menu.game_buttons(screen, scales, menu.pause_game, pg.quit)  # Функции выхода из игры заменить на функции паузы и подсказки
+            menu.game_buttons(screen, scales, menu.pause_game, menu.hint)  
             if menu.pause_game.has_been_called:
                 break
+            for b in button:
+                b.draw()
             for platform in self.platforms:
                 platform.draw()
             for spike in self.spikes:
@@ -85,13 +90,14 @@ class Game:
                     if event.key==pg.K_SPACE:
                         self.space = False
             hero.update(self.left, self.right, self.up, self.down, self.screen, self.platforms)
+
             
-            if level.check_passage():
-                #FIXME: когда уровень пройден нужно открыть дверь
-                for el in self.platforms:
-                    el.move()
-                for el in self.spikes:
-                    el.move()
+            # if level.check_passage():
+            #     #FIXME: когда уровень пройден нужно открыть дверь
+            #     for el in self.platforms:
+            #         el.move()
+            #     for el in self.spikes:
+            #         el.move()
 
             pg.display.update()
             fpsClock.tick(fps)
