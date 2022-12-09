@@ -13,7 +13,7 @@ WHITE = (200, 200, 200)
 
 platforms = []
 spikes = []
-button = [level.PushableButton(screen, 380, 220, 200, 20)]
+button = [level.PushableButton(screen, 420, 224, 120, 18)]
 
 
 level.read_data(screen, platforms, spikes, 'objects.json')
