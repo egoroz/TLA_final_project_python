@@ -4,7 +4,7 @@ class Player:
     
     ax = 0.5
     ay = 0.5
-    maxv = 5
+    maxv = 3
     h = 60
     w = 60
    
@@ -14,7 +14,7 @@ class Player:
         self.y = y
         self.vx = 0
         self.vy = 0
-        self.ax = 1
+        self.ax = 0.5
         self.ay = 1
         self.jump = -10
         self.g = 0.3
@@ -24,23 +24,34 @@ class Player:
         self.image = pg.transform.scale(self.image, (self.w, self.h))
         self.rect = self.image.get_rect()
     
-    def collision(self,platforms):
+    def collision(self,platforms,screen):
         for pl in platforms:
             #print(pl)
             d=7
+            
+           # pg.draw.rect(screen,(0,0,255),(self.x,self.y+d, 2 ,self.h-3*d))
+           #pg.draw.rect(screen,(255,0,255),(self.x+self.w,self.y+d,2,self.h-3*d))
             if pg.Rect.colliderect(self.rect,pl.make_rect()):
+                if pg.Rect.colliderect(pg.Rect(self.x+self.w,self.y+d,2,self.h-3*d),pl.make_rect()):#right
+                  # self.x=pl.x-self.w
+                  # pg.draw.rect(screen,(0,255,255),(self.x+self.h-d,self.y+d,2,self.h-2*d))
+                  # print('right')
+                   self.x-=3
+                   self.vx=0
                 if pg.Rect.colliderect(pg.Rect(self.x,self.y+d, 2 ,self.h-3*d),pl.make_rect()):#left
                    # self.x=pl.x+pl.xx
-                    self.vx=3
+                   # pg.draw.rect(screen,(0,0,255),(self.x,self.y+d, 2 ,self.h-2*d))
+                    #print('left')
+                    self.x+=3
+                    self.vx=0
                 if pg.Rect.colliderect(pg.Rect(self.x,self.y,self.w,2),pl.make_rect()):#up
                     self.vy=3
                 if pg.Rect.colliderect(pg.Rect(self.x,self.y+self.h,self.w,2),pl.make_rect()):#down
-                    self.vy=-1
+                    self.vy=0
+                    self.y-=1
                     self.land=True
                    # self.y=-self.h+pl.y
-                if pg.Rect.colliderect(pg.Rect(self.x+self.w-d,self.y+d,2,self.h-2*d),pl.make_rect()):#right
-                  # self.x=pl.x-self.w
-                   self.vx=-3
+                
                     
                 #print(pl)
     def draw(self, screen):
@@ -68,8 +79,9 @@ class Player:
         self.y+=self.vy
         
         self.land = False
-        self.collision(platforms)
+        
         self.rect = pg.Rect(self.x,self.y,self.w,self.h)
         self.draw(screen)
+        self.collision(platforms,screen)##return!!!
 
 

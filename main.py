@@ -92,6 +92,7 @@ class Game:
                     el.move()
 
             pg.display.update()
+            fpsClock.tick(fps)
 
 game = Game(screen, platforms, spikes, up, down, right, left, space)
 
