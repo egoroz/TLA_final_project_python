@@ -56,7 +56,7 @@ class Game:
         while not finished:
             self.screen.fill(WHITE)
             menu.pause_game.has_been_called = False
-            menu.game_buttons(screen, scales, menu.pause_game, pg.quit)  # Функции выхода из игры заменить на функции паузы и подсказки
+            menu.game_buttons(screen, scales, menu.pause_game, menu.hint)  
             if menu.pause_game.has_been_called:
                 break
             for platform in self.platforms:
