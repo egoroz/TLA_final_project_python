@@ -13,13 +13,14 @@ WHITE = (200, 200, 200)
 
 platforms = []
 spikes = []
-button = [level.PushableButton(screen, 420, 224, 120, 18)]
+buttons = []
 
 
-level.read_data(screen, platforms, spikes, 'objects.json')
+level.read_data(screen, platforms, spikes, buttons, scales, 'objects.json')
 level.scale_objects(platforms, scales)
 level.scale_objects(spikes, scales)
-level.scale_objects(button, scales)
+level.scale_objects(buttons, scales)
+
 
 hero = player.Player(300, 100, screen)
 fps = 60
@@ -62,9 +63,9 @@ class Game:
             menu.game_buttons(screen, scales, menu.pause_game, menu.hint)  
             if menu.pause_game.has_been_called:
                 break
-            for b in button:
-                b.draw()
-                b.update(hero)
+            for button in buttons:
+                button.draw()
+                button.update(hero)
             for platform in self.platforms:
                 platform.draw()
             for spike in self.spikes:
