@@ -18,9 +18,9 @@ def scale_objects(objects, scales):
 
     for object in objects:
         object.x *= scale_x
-        object.xx *= scale_x
+        object.w *= scale_x
         object.y *= scale_y
-        object.yy *= scale_y
+        object.h *= scale_y
 
 class Platform:
     '''Конструктор класса Platform
@@ -31,20 +31,20 @@ class Platform:
     xx - ширина
     yy - высота
     '''
-    def __init__(self, screen, x, y, xx, yy):
+    def __init__(self, screen, x, y, w, h):
         self.x = x
         self.y = y
-        self.xx = xx
-        self.yy = yy
+        self.w = w
+        self.h = h
         self.color = BLACK
         self.screen = screen
     
     def make_rect(self):
-        return pg.Rect(self.x, self.y, self.xx, self.yy)
+        return pg.Rect(self.x, self.y, self.w, self.h)
     
     def draw(self):
         '''Рисует платформы на уровне'''
-        pg.draw.rect(self.screen, self.color, (self.x, self.y, self.xx, self.yy))
+        pg.draw.rect(self.screen, self.color, (self.x, self.y, self.w, self.h))
 
     def move(self):
         '''Движение платформ при прохождении'''
@@ -62,14 +62,14 @@ class Spike:
     def __init__(self, screen, x, y, a, color=CYAN):
         self.x = x
         self.y = y
-        self.xx = 25
-        self.yy = 25
+        self.w = 25
+        self.h = 25
         self.screen = screen
         self.color = color
 
     def draw(self):
         '''Рисует шипы на уровне'''
-        pg.draw.rect(self.screen, self.color, (self.x, self.y, self.xx, self.yy))
+        pg.draw.rect(self.screen, self.color, (self.x, self.y, self.w, self.h))
 
     def move(self):
         '''Движение шипов при прохождении'''
@@ -101,7 +101,8 @@ class PushableButton:
         self.w = w
         self.h = h
         self.rect = (x, y, w, h)
-        self.color = (255, 0 , 0)
+        self.color = (255, 0, 0)
+        self.screen = screen
 
     def update(self, obj):
         if pg.Rect.colliderect((obj.x, obj.y, obj.w, obj.h), self.rect):
