@@ -100,32 +100,6 @@ while not finished:
     screen.fill(WHITE)
     theme.init_theme(screen)
     menu.start_buttons(screen, scales, game.start_game, menu.exit_game, menu.resume_game)
-    #for platform in platforms:
-        #platform.draw()
-    #for spike in spikes:
-        #spike.draw()
-    #for event in pg.event.get():
-     #   if event.type == pg.QUIT:
-      #      finished = True
-       # elif event.type==pg.KEYDOWN:
-        #    if event.key==pg.K_UP:
-         #       up =True
-          #  if event.key==pg.K_LEFT:
-           #     left =True
-            #if event.key==pg.K_RIGHT:
-             #   right =True
-           # if event.key==pg.K_SPACE:
-            #    space =True
-        #elif event.type==pg.KEYUP:
-         #   if event.key==pg.K_UP:
-          #      up=False
-           # if event.key==pg.K_LEFT:
-            #    left = False
-            #if event.key==pg.K_RIGHT:
-             #   right = False
-           # if event.key==pg.K_SPACE:
-            #    space = False
-    #hero.update(left,right,up,down,screen,platforms) 
     for event in pg.event.get():
                 if event.type == pg.QUIT:
                     finished = True
