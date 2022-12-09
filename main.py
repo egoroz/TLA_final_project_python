@@ -62,7 +62,8 @@ class Game:
             menu.game_buttons(screen, scales, menu.pause_game, pg.quit)  # Функции выхода из игры заменить на функции паузы и подсказки
             if menu.pause_game.has_been_called:
                 break
-            button.draw()
+            for b in button:
+                b.draw()
             for platform in self.platforms:
                 platform.draw()
             for spike in self.spikes:
