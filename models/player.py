@@ -17,7 +17,7 @@ class Player:
         self.ax = 0.5
         self.ay = 1
         self.jump = -10
-        self.g = 0.3
+        self.g = 0.2
         self.animation_index=0
         self.land=False
         self.walk_cycle = [pg.transform.scale(pg.image.load(f"pic\p1_walk{i:0>2}.png"),(self.w,self.h)) for i in range(1,12)]
@@ -52,7 +52,8 @@ class Player:
                     self.vy=3
                 if pg.Rect.colliderect(pg.Rect(self.x,self.y+self.h,self.w,2),pl.make_rect()):#down
                     self.vy=0
-                    self.y-=1
+                    while pg.Rect.colliderect(pg.Rect(self.x,self.y+self.h,self.w,2),pl.make_rect()):
+                       self.y -= 0.001
                     self.land=True
                    # self.y=-self.h+pl.y
                 
