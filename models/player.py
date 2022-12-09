@@ -18,11 +18,15 @@ class Player:
         self.ay = 1
         self.jump = -10
         self.g = 0.3
+        self.animation_index=0
         self.land=False
-        self.image = pg.image.load('test2.png').convert_alpha()
+        self.walk_cycle = [pg.transform.scale(pg.image.load(f"pic\p1_walk{i:0>2}.png"),(self.w,self.h)) for i in range(1,12)]
+        self.stop=pg.transform.scale(pg.image.load("pic\p1_front.png"),(self.w,self.h))
+        #p1_walk01.png
+        #self.image = pg.image.load('test2.png').convert_alpha()
        # self.image= self.image.convert_alpha(self.image)
-        self.image = pg.transform.scale(self.image, (self.w, self.h))
-        self.rect = self.image.get_rect()
+        #self.image = pg.transform.scale(self.image, (self.w, self.h))
+       # self.rect = self.image.get_rect()
     
     def collision(self,platforms,screen):
         for pl in platforms:
@@ -54,6 +58,18 @@ class Player:
                 
                     
                 #print(pl)
+    def anim(self):
+        if self.vx==0:
+            self.image=self.stop
+        else:
+            self.image = self.walk_cycle[self.animation_index]
+            if self.vx<0:
+                self.image = pg.transform.flip(self.image, True, False)
+            
+            if self.animation_index < len(self.walk_cycle)-1:
+                self.animation_index += 1
+            else:
+                self.animation_index = 0            
     def draw(self, screen):
         '''Добавь докстринг'''
         image_rect = self.image.get_rect()
@@ -70,7 +86,7 @@ class Player:
         if up:
             if self.land:
                 self.vy = self.jump
-                
+        self.anim()        
             
         if not self.land:
             self.vy+=self.g
