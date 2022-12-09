@@ -83,17 +83,17 @@ def exit_game():
     '''Выход из игры'''
     pg.quit()
 
-def resume_game():
-    '''Продолжить с предыдущего сохранения'''
-    print('Resume')  # Ждет кода игры
+def pause_game():
+    '''Функция паузы игры'''
+    pause_game.has_been_called = True
+    pass
 
-def start_buttons(screen, scales, func_1, func_2, func_3):
+def start_buttons(screen, scales, func_1, func_2):
     '''Отображает кнопки стартового меню'''
-    New_game_button = Button(280, 320, 380, 60, scales, func_1, 'New Game')
+    New_game_button = Button(280, 390, 380, 60, scales, func_1, 'Play game')
     Exit_game_button = Button(280, 460, 380, 60, scales, func_2, 'Exit game')    
-    Resume_game_button = Button(280, 390, 380, 60, scales, func_3, 'Resume game')
 
-    objects = [New_game_button, Exit_game_button, Resume_game_button]
+    objects = [New_game_button, Exit_game_button]
     for object in objects:
         object.process(screen)
 

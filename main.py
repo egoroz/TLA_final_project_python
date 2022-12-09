@@ -55,8 +55,10 @@ class Game:
         finished = False
         while not finished:
             self.screen.fill(WHITE)
-            menu.game_buttons(screen, scales, menu.exit_game, menu.exit_game)  # Функции выхода из игры заменить на функции паузы и подсказки
-
+            menu.pause_game.has_been_called = False
+            menu.game_buttons(screen, scales, menu.pause_game, menu.exit_game)  # Функции выхода из игры заменить на функции паузы и подсказки
+            if menu.pause_game.has_been_called:
+                break
             for platform in self.platforms:
                 platform.draw()
             for spike in self.spikes:
@@ -99,7 +101,7 @@ game = Game(screen, platforms, spikes, up, down, right, left, space)
 while not finished:
     screen.fill(WHITE)
     theme.init_theme(screen)
-    menu.start_buttons(screen, scales, game.start_game, menu.exit_game, menu.resume_game)
+    menu.start_buttons(screen, scales, game.start_game, menu.exit_game)
     for event in pg.event.get():
                 if event.type == pg.QUIT:
                     finished = True
