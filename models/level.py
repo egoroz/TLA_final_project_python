@@ -94,7 +94,38 @@ def read_data(screen, platforms, spikes, input_file):
             spike = Spike(screen, **data[1]['spike'][i])
             spikes.append(spike)
 
-def check_passage():
+class PushableButton:
+    def __init__(self, screen, x, y, w, h):
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
+        self.rect = (x, y, w, h)
+        self.color = (255, 0 , 0)
+
+    def update(self, obj):
+        if pg.Rect.colliderect((obj.x, obj.y, obj.w, obj.h), self.rect):
+            self.y = obj.y + obj.h
+    def draw(self):
+        pg.draw.rect(self.screen, self.color, self.rect)
+
+class Door:
+    def __init__(self, screen, x, y, w, h):
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
+        self.rect = (x, y, w, h)
+        self.color = (0, 0, 0)
+
+    def update(self, obj):
+        self.y = obj.y + obj.h
+    def draw(self):
+        pg.draw.rect(self.screen, self.color, self.rect)
+
+
+def check_passage(player, objects):
     '''Проверяет прохождение уровня'''
-    #FIXME: Условие при котором уровень будет пройден return True
-    return False   
+        # if
+    return False
+
