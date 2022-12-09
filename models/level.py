@@ -100,13 +100,14 @@ class PushableButton:
         self.y = y
         self.w = w
         self.h = h
-        self.rect = (x, y, w, h)
+        self.rect = pg.Rect(self.x, self.y, self.w, self.h)
         self.color = (255, 0, 0)
         self.screen = screen
 
     def update(self, obj):
-        if pg.Rect.colliderect((obj.x, obj.y, obj.w, obj.h), self.rect):
+        if pg.Rect.colliderect(pg.Rect(obj.x, obj.y, obj.w, obj.h), self.rect):
             self.y = obj.y + obj.h
+            self.rect = pg.Rect(self.x, self.y, self.w, self.h)
     def draw(self):
         pg.draw.rect(self.screen, self.color, self.rect)
 

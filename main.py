@@ -64,6 +64,7 @@ class Game:
                 break
             for b in button:
                 b.draw()
+                b.update(hero)
             for platform in self.platforms:
                 platform.draw()
             for spike in self.spikes:
