@@ -79,17 +79,23 @@ class Button:
         ])
         screen.blit(self.buttonSurface, self.buttonRect)
 
-def exit_game():
-    '''Выход из игры'''
-    pg.quit()
-
 def pause_game():
     '''Функция паузы игры'''
     pause_game.has_been_called = True
     pass
 
+def hint():
+    '''Функция подсказки к прохождению уровня'''
+    pass  # FIXME
+
 def start_buttons(screen, scales, func_1, func_2):
-    '''Отображает кнопки стартового меню'''
+    '''Отображает кнопки стартового меню
+    Args:
+    screen - экран отрисовки
+    scales - масштабирование
+    func_1 - первая функция
+    func_2 - вторая функция
+    '''
     New_game_button = Button(280, 390, 380, 60, scales, func_1, 'Play game')
     Exit_game_button = Button(280, 460, 380, 60, scales, func_2, 'Exit game')    
 
@@ -98,7 +104,13 @@ def start_buttons(screen, scales, func_1, func_2):
         object.process(screen)
 
 def game_buttons(screen, scales, func_1, func_2):
-    '''Отображает кнопки игрового экрана'''
+    '''Отображает кнопки игрового экрана
+    Args:
+    screen - экран отрсовки
+    scales - масштабирование
+    func_1 - первая функция
+    func_2 - вторая функция
+    '''
     Pause_button = Button(30, 30, 50, 30, scales, func_1, "Pause")
     Hint_button = Button(90, 30, 50, 30, scales, func_2, "Hint")
 

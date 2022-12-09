@@ -56,7 +56,7 @@ class Game:
         while not finished:
             self.screen.fill(WHITE)
             menu.pause_game.has_been_called = False
-            menu.game_buttons(screen, scales, menu.pause_game, menu.exit_game)  # Функции выхода из игры заменить на функции паузы и подсказки
+            menu.game_buttons(screen, scales, menu.pause_game, pg.quit)  # Функции выхода из игры заменить на функции паузы и подсказки
             if menu.pause_game.has_been_called:
                 break
             for platform in self.platforms:
@@ -101,7 +101,7 @@ game = Game(screen, platforms, spikes, up, down, right, left, space)
 while not finished:
     screen.fill(WHITE)
     theme.init_theme(screen)
-    menu.start_buttons(screen, scales, game.start_game, menu.exit_game)
+    menu.start_buttons(screen, scales, game.start_game, pg.quit)
     for event in pg.event.get():
                 if event.type == pg.QUIT:
                     finished = True

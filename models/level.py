@@ -9,7 +9,11 @@ BLACK = (0, 0, 0)
 BROWN = (100, 50, 20)
 
 def scale_objects(objects, scales):
-    '''Скейлит объекты под разрешение экрана пользователя'''
+    '''Скейлит объекты под разрешение экрана пользователя
+    Args:
+    objects - список объектов для скейла
+    scales - масштабирование
+    '''
     scale_x, scale_y = scales
 
     for object in objects:
@@ -21,11 +25,11 @@ def scale_objects(objects, scales):
 class Platform:
     '''Конструктор класса Platform
     Args:
-    screen -
-    x - 
-    y - 
-    xx - 
-    yy -
+    screen - экран
+    x - координата по иксу
+    y - координата по игреку
+    xx - ширина
+    yy - высота
     '''
     def __init__(self, screen, x, y, xx, yy):
         self.x = x
@@ -34,8 +38,10 @@ class Platform:
         self.yy = yy
         self.color = BLACK
         self.screen = screen
+    
     def make_rect(self):
         return pg.Rect(self.x, self.y, self.xx, self.yy)
+    
     def draw(self):
         '''Рисует платформы на уровне'''
         pg.draw.rect(self.screen, self.color, (self.x, self.y, self.xx, self.yy))
@@ -70,7 +76,13 @@ class Spike:
         self.x -= 0.1
 
 def read_data(screen, platforms, spikes, input_file):
-    '''Считывает данные о расположении платформ и шипов с файла input_file'''
+    '''Считывает данные о расположении платформ и шипов с файла input_file
+    Args:
+    screen - экран
+    platforms - список платформ, куда идет запись
+    spikes - список шипов, куда идет запись
+    input_file - файл считывания
+    '''
     with open(input_file, 'r') as file:
         data = json.load(file)
         count_of_platforms = len(data[0]['platform'])
