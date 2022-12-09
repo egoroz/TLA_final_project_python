@@ -94,6 +94,7 @@ def read_data(screen, platforms, spikes, input_file):
             spike = Spike(screen, **data[1]['spike'][i])
             spikes.append(spike)
 
+
 class PushableButton:
     def __init__(self, screen, x, y, w, h):
         self.x = x
@@ -106,10 +107,10 @@ class PushableButton:
 
     def update(self, obj):
         if pg.Rect.colliderect(pg.Rect(obj.x, obj.y, obj.w, obj.h), self.rect):
-            self.y = obj.y + obj.h
+            self.y += 1
             self.rect = pg.Rect(self.x, self.y, self.w, self.h)
     def draw(self):
-        pg.draw.rect(self.screen, self.color, self.rect)
+        pg.draw.rect(self.screen, self.color, (self.x, self.y, self.w, self.h))
 
 class Door:
     def __init__(self, screen, x, y, w, h):
