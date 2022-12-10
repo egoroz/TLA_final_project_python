@@ -58,10 +58,10 @@ class Player:
                     self.vx=0
                 if pg.Rect.colliderect(pg.Rect(self.x,self.y,self.w,2),pl.make_rect()):#up
                     self.vy=3
-                if pg.Rect.colliderect(pg.Rect(self.x,self.y+self.h,self.w,2),pl.make_rect()):#down
+                if pg.Rect.colliderect(pg.Rect(self.x,self.y+self.h+1,self.w,2),pl.make_rect()):#down
                     self.vy=0
-                    while pg.Rect.colliderect(pg.Rect(self.x,self.y+self.h,self.w,2),pl.make_rect()):
-                       self.y -= 0.001
+                    while pg.Rect.colliderect(pg.Rect(self.x,self.y+self.h+1,self.w,2),pl.make_rect()):
+                       self.y -= 0.01
                     self.land=True
                    # self.y=-self.h+pl.y
                 
@@ -98,17 +98,18 @@ class Player:
         self.anim()
                 
             
-        if not self.land:
-            self.vy+=self.g
+        
         self.x+=self.vx
        # print(self.vy)
         self.y+=self.vy
         
         self.land = False
         
-        self.rect = pg.Rect(self.x,self.y,self.w,self.h)
+        self.rect = pg.Rect(self.x,self.y,self.w,self.h+1)
         self.kill(True,spikes)
         self.collision(platforms,screen)##return!!!
+        if not self.land:
+            self.vy+=self.g
         self.draw(screen)
 
 

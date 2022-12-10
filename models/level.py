@@ -112,7 +112,7 @@ class PushableButton:
         self.screen = screen
         self.c = 0  # на сколько пикселей опустилось вниз
     def update(self, obj):
-        if pg.Rect.colliderect(pg.Rect(obj.x, obj.y, obj.w, obj.h), self.rect):
+        if pg.Rect.colliderect(pg.Rect(obj.x, obj.y+3, obj.w, obj.h), self.rect):
             self.y += 1
             self.c += 1
         else:
