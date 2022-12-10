@@ -77,7 +77,7 @@ class Spike:
     def make_rect(self):
         return pg.Rect(self.x, self.y, self.w, self.h)
 
-def read_data(screen, platforms, spikes, input_file):
+def read_data(screen, platforms, spikes, buttons, scales, input_file):
     '''Считывает данные о расположении платформ и шипов с файла input_file
     Args:
     screen - экран
@@ -95,6 +95,11 @@ def read_data(screen, platforms, spikes, input_file):
         for i in range(count_of_spikes):
             spike = Spike(screen, **data[1]['spike'][i])
             spikes.append(spike)
+        count_of_buttons = len(data[2]['button'])
+        for i in range(count_of_buttons):
+            button = PushableButton(screen, **data[2]['button'][i])
+            buttons.append(button)
+
 
 class PushableButton:
     def __init__(self, screen, x, y, w, h):
@@ -102,15 +107,21 @@ class PushableButton:
         self.y = y
         self.w = w
         self.h = h
-        self.rect = (x, y, w, h)
+        self.rect = pg.Rect(self.x, self.y, self.w, self.h)
         self.color = (255, 0, 0)
         self.screen = screen
-
+        self.c = 0  # на сколько пикселей опустилось вниз
     def update(self, obj):
-        if pg.Rect.colliderect((obj.x, obj.y, obj.w, obj.h), self.rect):
-            self.y = obj.y + obj.h
+        if pg.Rect.colliderect(pg.Rect(obj.x, obj.y, obj.w, obj.h), self.rect):
+            self.y += 1
+            self.c += 1
+        else:
+            if self.c:
+                self.y -= 1
+                self.c -= 1
+        self.rect = pg.Rect(self.x, self.y, self.w, self.h)
     def draw(self):
-        pg.draw.rect(self.screen, self.color, self.rect)
+        pg.draw.rect(self.screen, self.color, (self.x, self.y, self.w, self.h))
 
 class Door:
     def __init__(self, screen, x, y, w, h):
