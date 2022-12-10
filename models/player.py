@@ -81,13 +81,16 @@ class Player:
         for pl in platforms:
             plats.append(pl.make_rect())
         if dir=='d':
-            if pg.Rect(self.x,self.y+self.h+self.vy,self.w,2).collidelist(plats)!=-1: self.land=True
+            if pg.Rect(self.x,self.y+self.h+self.vy,self.w,2).collidelist(plats)!=-1: 
+                self.land=True
+                self.vy=0
             return pg.Rect(self.x,self.y+self.h+1,self.w,2).collidelist(plats)!=-1
         if dir=='l':
             return pg.Rect(self.x-1,self.y+d, 2 ,self.h-3*d).collidelist(plats)!=-1
         if dir=='r':
             return pg.Rect(self.x+self.w+1,self.y+d,2,self.h-3*d).collidelist(plats)!=-1
         if dir=='u':
+            if pg.Rect(self.x,self.y-1,self.w,2).collidelist(plats)!=-1:self.vy=0
             return pg.Rect(self.x,self.y-1,self.w,2).collidelist(plats)!=-1 
 
                 
@@ -121,6 +124,7 @@ class Player:
                 self.vy = self.jump
         if not self.land:
             self.vy+=self.g
+            self.vy=min(7,self.vy)
         self.anim()
         self.land = False
         self.move(platforms)              
@@ -128,7 +132,7 @@ class Player:
         
         
         self.rect = pg.Rect(self.x,self.y,self.w,self.h+1)
-        self.kill(False,spikes)
+        self.kill(True,spikes)
         #self.collision(platforms,screen)##return!!!
         
         self.draw(screen)
