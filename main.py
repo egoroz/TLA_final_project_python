@@ -89,7 +89,7 @@ class Game:
                         self.right = False
                     if event.key==pg.K_SPACE:
                         self.space = False
-            hero.update(self.left, self.right, self.up, self.down, self.screen, self.platforms)
+            hero.update(self.left, self.right, self.up, self.down, self.screen, self.platforms,self.spikes)
 
             
             # if level.check_passage():

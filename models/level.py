@@ -74,6 +74,8 @@ class Spike:
     def move(self):
         '''Движение шипов при прохождении'''
         self.x -= 0.1
+    def make_rect(self):
+        return pg.Rect(self.x, self.y, self.w, self.h)
 
 def read_data(screen, platforms, spikes, input_file):
     '''Считывает данные о расположении платформ и шипов с файла input_file

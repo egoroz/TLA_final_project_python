@@ -27,7 +27,15 @@ class Player:
        # self.image= self.image.convert_alpha(self.image)
         #self.image = pg.transform.scale(self.image, (self.w, self.h))
        # self.rect = self.image.get_rect()
-    
+    def kill (self,on,spikes):
+        if on:
+            for pl in spikes:
+                if pg.Rect.colliderect(self.rect,pl.make_rect()):
+                    self.x=40
+                    self.y=350
+                    self.vx=0
+                    self.vy=0
+
     def collision(self,platforms,screen):
         for pl in platforms:
             #print(pl)
@@ -76,7 +84,7 @@ class Player:
         image_rect = self.image.get_rect()
         screen.blit(self.image, (self.x, self.y))
 
-    def update(self, left, right, up, down, screen, platforms):
+    def update(self, left, right, up, down, screen, platforms,spikes):
         '''Добавь докстринг'''
         if left:
             self.vx = max(-self.maxv, self.vx-self.ax)
@@ -87,7 +95,8 @@ class Player:
         if up:
             if self.land:
                 self.vy = self.jump
-        self.anim()        
+        self.anim()
+                
             
         if not self.land:
             self.vy+=self.g
@@ -98,7 +107,8 @@ class Player:
         self.land = False
         
         self.rect = pg.Rect(self.x,self.y,self.w,self.h)
-        self.draw(screen)
+        self.kill(True,spikes)
         self.collision(platforms,screen)##return!!!
+        self.draw(screen)
 
 
