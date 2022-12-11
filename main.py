@@ -65,9 +65,6 @@ class Game:
             menu.game_buttons(screen, scales, menu.pause_game, menu.hint)  
             if menu.pause_game.has_been_called:
                 break
-            for door in doors:
-                door.draw()
-                door.update(True)
             for button in buttons:
                 button.draw()
                 button.update(hero)
@@ -97,6 +94,9 @@ class Game:
                     if event.key==pg.K_SPACE:
                         self.space = False
             hero.update(self.left, self.right, self.up, self.down, self.screen, self.platforms,self.spikes)
+            for door in doors:
+                door.draw()
+                door.update(True)
 
             
             # if level.check_passage():

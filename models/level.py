@@ -153,8 +153,10 @@ class Door:
         else:
             self.y += 1
             self.c -= 1
+
     def draw(self):
         pg.draw.rect(self.screen, self.color, (self.x, self.y, self.w, self.h))
+        self.rect = (self.x, self.y, self.w, self.h)
 
 
 def check_passage(player, objects):
