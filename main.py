@@ -14,12 +14,14 @@ WHITE = (200, 200, 200)
 platforms = []
 spikes = []
 buttons = []
+doors = []
 
 
-level.read_data(screen, platforms, spikes, buttons, scales, 'objects.json')
+level.read_data(screen, platforms, spikes, buttons, doors, 'objects.json')
 level.scale_objects(platforms, scales)
 level.scale_objects(spikes, scales)
 level.scale_objects(buttons, scales)
+level.scale_objects(doors, scales)
 
 
 hero = player.Player(300, 100, screen)
@@ -63,6 +65,9 @@ class Game:
             menu.game_buttons(screen, scales, menu.pause_game, menu.hint)  
             if menu.pause_game.has_been_called:
                 break
+            for door in doors:
+                door.draw()
+                door.update(True)
             for button in buttons:
                 button.draw()
                 button.update(hero)

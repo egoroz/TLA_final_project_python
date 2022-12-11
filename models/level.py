@@ -77,7 +77,7 @@ class Spike:
     def make_rect(self):
         return pg.Rect(self.x, self.y, self.w, self.h)
 
-def read_data(screen, platforms, spikes, buttons, scales, input_file):
+def read_data(screen, platforms, spikes, buttons, doors, input_file):
     '''Считывает данные о расположении платформ и шипов с файла input_file
     Args:
     screen - экран
@@ -91,14 +91,21 @@ def read_data(screen, platforms, spikes, buttons, scales, input_file):
         for i in range(count_of_platforms):
             platform = Platform(screen, **data[0]['platform'][i])
             platforms.append(platform)
+
         count_of_spikes = len(data[1]['spike'])
         for i in range(count_of_spikes):
             spike = Spike(screen, **data[1]['spike'][i])
             spikes.append(spike)
+
         count_of_buttons = len(data[2]['button'])
         for i in range(count_of_buttons):
             button = PushableButton(screen, **data[2]['button'][i])
             buttons.append(button)
+
+        count_of_doors = len(data[3]['door'])
+        for i in range(count_of_doors):
+            door = Door(screen, **data[3]['door'][i])
+            doors.append(door)
 
 
 class PushableButton:
@@ -129,13 +136,25 @@ class Door:
         self.y = y
         self.w = w
         self.h = h
-        self.rect = (x, y, w, h)
+        self.rect = (self.x, self.y, self.w, self.h)
         self.color = (0, 0, 0)
+        self.screen = screen
+        self.opened = False
+        self.c = 0  # на сколько пикселей поднялась дверь
 
-    def update(self, obj):
-        self.y = obj.y + obj.h
+    def update(self, func):
+        if func:
+            self.opened = True
+        else:
+            self.opened = False
+        if self.opened and self.c < 200:
+            self.y -= 1
+            self.c += 1
+        else:
+            self.y += 1
+            self.c -= 1
     def draw(self):
-        pg.draw.rect(self.screen, self.color, self.rect)
+        pg.draw.rect(self.screen, self.color, (self.x, self.y, self.w, self.h))
 
 
 def check_passage(player, objects):
