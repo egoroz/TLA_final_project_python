@@ -118,10 +118,12 @@ class PushableButton:
         self.color = (255, 0, 0)
         self.screen = screen
         self.c = 0  # на сколько пикселей опустилось вниз
+        self.push = False
     def update(self, obj):
         if pg.Rect.colliderect(pg.Rect(obj.x, obj.y, obj.w, obj.h), self.rect):
             self.y += 1
             self.c += 1
+            self.push = True
         else:
             if self.c:
                 self.y -= 1
@@ -150,7 +152,7 @@ class Door:
         if self.opened and self.c < 200:
             self.y -= 1
             self.c += 1
-        else:
+        elif self.c > 0:
             self.y += 1
             self.c -= 1
     def make_rect(self):
@@ -161,8 +163,9 @@ class Door:
 
 
 def check_passage(player, objects):
-    '''Проверяет прохождение уровня'''
-        # if
-    return False
+    flag = False
+    for obj in objects:
+        flag += obj.push
+    return flag
 
 #remove +3

@@ -96,16 +96,8 @@ class Game:
             hero.update(self.left, self.right, self.up, self.down, self.screen, self.platforms,self.spikes)
             for door in doors:
                 door.draw()
-                
-                door.update(True)
+                door.update(level.check_passage(hero, buttons))
 
-            
-            # if level.check_passage():
-            #     #FIXME: когда уровень пройден нужно открыть дверь
-            #     for el in self.platforms:
-            #         el.move()
-            #     for el in self.spikes:
-            #         el.move()
 
             pg.display.update()
             fpsClock.tick(fps)
