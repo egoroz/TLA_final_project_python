@@ -55,7 +55,7 @@ class Game:
         self.right = right
         self.left = left
         self.space = space
-        
+        self.platforms.append(doors[0])
     def start_game(self):
         '''Запуск игры'''
         finished = False
@@ -96,6 +96,7 @@ class Game:
             hero.update(self.left, self.right, self.up, self.down, self.screen, self.platforms,self.spikes)
             for door in doors:
                 door.draw()
+                
                 door.update(True)
 
             
