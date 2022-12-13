@@ -25,7 +25,7 @@ level.scale_objects(buttons, scales)
 level.scale_objects(doors, scales)
 
 
-hero = player.Player(300, 100, screen)
+hero = player.Player(0, 440, screen)
 fps = 60
 fpsClock = pg.time.Clock()
 pg.init()

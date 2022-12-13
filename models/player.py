@@ -31,8 +31,8 @@ class Player:
         if on:
             for pl in spikes:
                 if pg.Rect.colliderect(self.rect,pl.make_rect()):
-                    self.x=40
-                    self.y=350
+                    self.x=0
+                    self.y=440
                     self.vx=0
                     self.vy=0
 
