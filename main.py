@@ -15,6 +15,7 @@ platforms = []
 spikes = []
 buttons = []
 doors = []
+levels = 0
 
 
 level.read_data(screen, platforms, spikes, buttons, doors, 'objects.json')
@@ -98,6 +99,7 @@ class Game:
                 door.draw()
                 door.update(level.check_passage(hero, buttons))
 
+            level.update_level(screen, levels, hero, scales)
 
             pg.display.update()
             fpsClock.tick(fps)

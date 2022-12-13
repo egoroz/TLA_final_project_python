@@ -168,4 +168,13 @@ def check_passage(player, objects):
         flag += obj.push
     return flag
 
-#remove +3
+
+
+
+def update_level(screen, levels, hero, scales):
+    scale_x, scale_y = scales
+    if hero.x > 900*scale_x and 250*scale_y < hero.y < 300*scale_y:
+        pg.draw.rect(screen, BROWN, (900*scale_x, 250*scale_y, 100*scale_x, 50*scale_y))
+
+    return levels + 1
+
