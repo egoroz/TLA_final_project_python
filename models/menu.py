@@ -114,7 +114,7 @@ def game_buttons(screen, scales, func_1, func_2):
         object.process(screen)
 
 
-def title(screen, scales, dict, number, x = 270 , y= 50):
+def title(screen, scales, dict, number, x = 270, y = 50):
     '''Отрисовывает название уровня
     Args:
     screen - экран отрисовки

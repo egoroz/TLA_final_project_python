@@ -11,6 +11,8 @@ screen = pg.display.set_mode((sys_width, sys_height))
 
 WHITE = (200, 200, 200)
 
+
+
 platforms = []
 spikes = []
 buttons = []
@@ -19,12 +21,13 @@ old_platforms = []
 old_spikes = []
 old_buttons = []
 old_doors = []
-levels = 2
+levels = 3
 slide = False
 need_slide = 0
 count_wind = -1  # номер картинки ветра
 tick = 0  # раз в сколько-то тиков меняется картинка ветра
 collisable_obj = []
+player_position = (0, 0, 0)
 
 level.read_data(screen, platforms, spikes, buttons, doors, 'docs/objects.json')
 collisable_obj = platforms.copy()
@@ -71,7 +74,7 @@ class Game:
 
     def start_game(self):
         '''Запуск игры'''
-        global levels, old_platforms, old_spikes, old_buttons, old_doors, need_slide, slide, count_wind, tick
+        global levels, old_platforms, old_spikes, old_buttons, old_doors, need_slide, slide, count_wind, tick, player_position
         finished = False
         while not finished:
             self.screen.fill(WHITE)
@@ -84,7 +87,7 @@ class Game:
                 spike.draw()
             for door in doors:
                 door.draw()
-                door.update(level.check_passage(hero, levels, buttons, self.space))
+                door.update(level.check_passage(scales, hero, levels, buttons, self.space, player_position))
             for button in old_buttons:
                 button.draw()
                 button.update(hero)
