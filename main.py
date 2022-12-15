@@ -8,6 +8,8 @@ width, height = 1920//2, 1080//2
 sys_width, sys_height = pg.display.Info().current_w, pg.display.Info().current_h
 scales = (sys_width/width, sys_height/height)
 screen = pg.display.set_mode((sys_width, sys_height))
+pg.mixer.music.load("Soundtrack.wav")
+pg.mixer.music.play(-1)
 
 WHITE = (200, 200, 200)
 
@@ -34,11 +36,17 @@ level.scale_objects(spikes, scales)
 level.scale_objects(buttons, scales)
 level.scale_objects(doors, scales)
 
-dict = {
+title_dict = {
     0:"0.Нулёвка по общесосу",
     1:"1.Повторение - мать учения",
     2:"2.Илон Маск",
     3:"3.Возьми подсказку"}
+
+hint_dict = {
+    0:"Серьезно?!",
+    1:"Просто сильнее",
+    2:"SPACE-X"
+}
 
 hero = player.Player(0, 440, screen)
 fps = 60
@@ -118,11 +126,11 @@ class Game:
             menu.pause_game.has_been_called = False
             menu.ask_hint.has_been_called = False
             menu.game_buttons(screen, scales, menu.pause_game, menu.ask_hint)
-            menu.title(screen, scales, dict, levels)
+            menu.title(screen, scales, title_dict, levels)
             if menu.pause_game.has_been_called:
                 break
             if menu.ask_hint.has_been_called == True:
-                menu.hint(screen, scales, "Работает?")
+                menu.hint(screen, scales, hint_dict, levels)
             collisable_obj = platforms.copy()
             collisable_obj.append(doors[0])
             hero.update(self.left, self.right, self.up, self.down, self.screen, collisable_obj, spikes)
