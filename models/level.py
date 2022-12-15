@@ -193,7 +193,7 @@ class Door:
         self.rect = (self.x, self.y, self.w, self.h)
 
 
-def check_passage(scales, player, levels, buttons, space, player_position):
+def check_passage(scales, player, levels, buttons, space, player_position, doors, knock_count, mouse, count_mouse, last_mouse, now_death):
     '''Docstring
     Agrs:
     scales - скейлинг
@@ -250,8 +250,10 @@ def check_passage(scales, player, levels, buttons, space, player_position):
             if count_mouse > 15:
                 flag = True
         last_mouse = mouse
+        now_death = player.death
     if levels == 7:
-
+        if player.death - now_death >= 9:
+            flag = True
     return flag, (player_x_last, player_y_last, count_one_position), knock_count, count_mouse, last_mouse
 
 
