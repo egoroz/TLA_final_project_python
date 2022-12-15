@@ -26,7 +26,7 @@ class Player:
         self.imp=0
         self.walk_cycle = [pg.transform.scale(pg.image.load(f"pic\p1_walk{i:0>2}.png"),(self.w,self.h)) for i in range(1,12)]
         self.stop=pg.transform.scale(pg.image.load("pic\p1_front.png"),(self.w,self.h))
-    
+        self.death = 0
     def kill (self,on,spikes):
         '''Убивает и телепортирует в начало при касании шипов'''
         if on:

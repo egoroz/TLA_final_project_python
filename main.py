@@ -64,7 +64,7 @@ hint_dict = {
     8:"Может, проверить ту кнопочку?"
     }
 
-hero = player.Player(0, 440, screen)
+hero = player.Player(0, 440)
 fps = 60
 fpsClock = pg.time.Clock()
 pg.init()
@@ -157,7 +157,7 @@ class Game:
                 menu.hint(screen, scales, hint_dict, levels)
             collisable_obj = platforms.copy()
             collisable_obj.append(doors[0])
-            hero.update(self.left, self.right, self.up, self.down, self.screen, collisable_obj, spikes)
+            hero.update(self.left, self.right, self.up, self.screen, collisable_obj, spikes)
 
             levels, old_platforms, old_spikes, old_buttons, old_doors, slide, need_slide = level.update_level(screen, need_slide, width, levels, hero, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, slide)
             need_slide, count_wind, tick = level.level_slide(screen, slide, need_slide, width, height, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, hero, count_wind, tick)
