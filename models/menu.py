@@ -136,7 +136,7 @@ def title(screen, scales, dict, number, x = 270, y = 50):
 def ask_hint():
     ask_hint.has_been_called = True
 
-def hint(screen, scales, dict, number, x = 650, y = 50):
+def hint(screen, scales, dict, number, x = 700, y = 50):
     text = dict[number]
     scale_x, scale_y = scales
     x = x*scale_x
