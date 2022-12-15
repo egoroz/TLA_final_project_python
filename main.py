@@ -67,7 +67,8 @@ class Game:
         while not finished:
             self.screen.fill(WHITE)
             menu.pause_game.has_been_called = False
-            menu.game_buttons(screen, scales, menu.pause_game, menu.hint)  
+            menu.game_buttons(screen, scales, menu.pause_game, menu.hint)
+            menu.title(screen, 270, 50, scales, "1.Нулевка по общесосу")  
             if menu.pause_game.has_been_called:
                 break
             for button in buttons:
