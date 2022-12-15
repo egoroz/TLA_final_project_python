@@ -21,7 +21,7 @@ old_platforms = []
 old_spikes = []
 old_buttons = []
 old_doors = []
-levels = 0
+levels = 5
 slide = False
 need_slide = 0
 count_wind = -1  # номер картинки ветра
@@ -30,6 +30,7 @@ collisable_obj = []
 player_position = (0, 0, 0)
 count_mouse = 0
 knock_count = 0
+now_death = 0
 
 level.read_data(screen, platforms, spikes, buttons, doors, 'docs/objects.json')
 collisable_obj = platforms.copy()
@@ -95,7 +96,7 @@ class Game:
 
     def start_game(self):
         '''Запуск игры'''
-        global levels, old_platforms, old_spikes, old_buttons, old_doors, need_slide, slide, count_wind, tick, player_position, knock_count, count_mouse, last_mouse
+        global levels, old_platforms, old_spikes, old_buttons, old_doors, need_slide, slide, count_wind, tick, player_position, knock_count, count_mouse, last_mouse, now_death
         finished = False
         while not finished:
             self.screen.fill(WHITE)
@@ -108,7 +109,7 @@ class Game:
                 spike.draw()
             for door in doors:
                 door.draw()
-                flag, player_position, knock_count, count_mouse, last_mouse = level.check_passage(scales, hero, levels, buttons, self.space, player_position, doors, knock_count, self.mouse, count_mouse, last_mouse)
+                flag, player_position, knock_count, count_mouse, last_mouse = level.check_passage(scales, hero, levels, buttons, self.space, player_position, doors, knock_count, self.mouse, count_mouse, last_mouse, now_death)
                 door.update(flag)
             for button in old_buttons:
                 button.draw()
