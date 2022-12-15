@@ -226,8 +226,8 @@ def level_slide(screen, slide, need_slide, width, height, scales, platforms, spi
     if slide:
         if need_slide > 0:
             scale_x, scale_y = scales
-            need_slide -= width*scale_x/200
-            d = width*scale_x/200
+            need_slide -= width*scale_x/50
+            d = width*scale_x/50
             for pl in platforms:
                 pl.x -= d
             for sp in spikes:
@@ -251,9 +251,29 @@ def level_slide(screen, slide, need_slide, width, height, scales, platforms, spi
             player.ax = 0
             player.ay = 0
             player.jump = 0
-            if tick % 10 == 0:
+            if tick % 7 == 0:
                 count_wind = (count_wind + 1) % 7
             image = pg.transform.scale(pg.image.load(f"pic\_{count_wind}.png"), (width * scale_x, height*scale_y))
             screen.blit(image, (0, 0))
             tick += 1
+            if platforms[0].x < 0:
+                d = -0.1
+                while platforms[0].x < 0:
+                    for pl in platforms:
+                        pl.x -= d
+                    for sp in spikes:
+                        sp.x -= d
+                    for bt in buttons:
+                        bt.x -= d
+                    for dr in doors:
+                        dr.x -= d
+
+                    for pl in old_platforms:
+                        pl.x -= d
+                    for sp in old_spikes:
+                        sp.x -= d
+                    for bt in old_buttons:
+                        bt.x -= d
+                    for dr in old_doors:
+                        dr.x -= d
     return need_slide, count_wind, tick
