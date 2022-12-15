@@ -82,11 +82,6 @@ class Button:
 def pause_game():
     '''Функция паузы игры'''
     pause_game.has_been_called = True
-    pass
-
-def hint():
-    '''Функция подсказки к прохождению уровня'''
-    pass  # FIXME
 
 def start_buttons(screen, scales, func_1, func_2):
     '''Отображает кнопки стартового меню
@@ -118,8 +113,28 @@ def game_buttons(screen, scales, func_1, func_2):
     for object in objects:
         object.process(screen)
 
-def title(screen, x, y, scales, text):
-    
+def title(screen, scales, text, x = 270 , y= 50):
+    '''Отрисовывает название уровня
+    Args:
+    screen - экран отрисовки
+    x - положение по иксу
+    y - положение по игреку
+    scales - масштаб
+    text - текст-название
+    '''
+    scale_x, scale_y = scales
+    x = x*scale_x
+    y = y*scale_y
+    font = pg.font.SysFont('Monotype Corsiva', 40)
+    text_surface = font.render(text, True, BLACK)
+    text_rect = text_surface.get_rect()
+    text_rect.center = (x, y)
+    screen.blit(text_surface, text_rect)
+
+def ask_hint():
+    ask_hint.has_been_called = True
+
+def hint(screen, scales, text, x = 650, y = 50):
     scale_x, scale_y = scales
     x = x*scale_x
     y = y*scale_y
