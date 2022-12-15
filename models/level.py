@@ -172,6 +172,7 @@ class Door:
 
 def check_passage(scales, player, levels, buttons, space, player_position):
     scale_x, scale_y = scales
+    player_x_last, player_y_last, count_one_position = player_position
     flag = False
     if levels == 0:
         for button in buttons:
@@ -189,20 +190,16 @@ def check_passage(scales, player, levels, buttons, space, player_position):
         if 90 * scale_x < player.x < (90+50) * scale_x  and 30 * scale_y < player.y < (30 + 30) * scale_y:
             flag = True
     if levels == 4:
-        level_4(player, player_position)
+        if player.x == player_x_last and player.y == player_y_last:
+            count_one_position += 1
+            if count_one_position > 600:
+                flag = True
+        else:
+            count_one_position = 0
+            player_x_last = player.x
+            player_y_last = player.y
 
-
-    return flag
-
-
-def level_4(player, player_position):
-    player_x_last, player_y_last, count_one_position = player_position
-    if player.x == player_x_last and player.y == player_y_last:
-        count_one_position += 1
-    else:
-        count_one_position = 0
-        player_x_last = player.x
-        player_y_last = player.y
+    return flag, (player_x_last, player_y_last, count_one_position)
 
 
 def update_level(screen, need_slide, width, levels, player, scales, platforms, spikes,

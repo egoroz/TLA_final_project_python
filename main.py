@@ -21,7 +21,7 @@ old_platforms = []
 old_spikes = []
 old_buttons = []
 old_doors = []
-levels = 3
+levels = 4
 slide = False
 need_slide = 0
 count_wind = -1  # номер картинки ветра
@@ -105,7 +105,8 @@ class Game:
                 spike.draw()
             for door in doors:
                 door.draw()
-                door.update(level.check_passage(scales, hero, levels, buttons, self.space, player_position))
+                flag, player_position = level.check_passage(scales, hero, levels, buttons, self.space, player_position)
+                door.update(flag)
             for button in old_buttons:
                 button.draw()
                 button.update(hero)
