@@ -28,6 +28,8 @@ count_wind = -1  # номер картинки ветра
 tick = 0  # раз в сколько-то тиков меняется картинка ветра
 collisable_obj = []
 player_position = (0, 0, 0)
+count_mouse = 0
+knock_count = 0
 
 level.read_data(screen, platforms, spikes, buttons, doors, 'docs/objects.json')
 collisable_obj = platforms.copy()
@@ -72,6 +74,8 @@ right = False
 up = False
 down = False
 space = False
+mouse = False
+last_mouse = False
 
 class Game:
     '''Конструктор класса Game
@@ -80,17 +84,18 @@ class Game:
     platforms - список платформ
     spikes - список шипов
     '''
-    def __init__(self, screen, up, down, right, left, space):
+    def __init__(self, screen, up, down, right, left, space, mouse):
         self.screen = screen
         self.up = up
         self.down = down
         self.right = right
         self.left = left
         self.space = space
+        self.mouse = mouse
 
     def start_game(self):
         '''Запуск игры'''
-        global levels, old_platforms, old_spikes, old_buttons, old_doors, need_slide, slide, count_wind, tick, player_position
+        global levels, old_platforms, old_spikes, old_buttons, old_doors, need_slide, slide, count_wind, tick, player_position, knock_count, count_mouse, last_mouse
         finished = False
         while not finished:
             self.screen.fill(WHITE)
@@ -103,7 +108,7 @@ class Game:
                 spike.draw()
             for door in doors:
                 door.draw()
-                flag, player_position = level.check_passage(scales, hero, levels, buttons, self.space, player_position)
+                flag, player_position, knock_count, count_mouse, last_mouse = level.check_passage(scales, hero, levels, buttons, self.space, player_position, doors, knock_count, self.mouse, count_mouse, last_mouse)
                 door.update(flag)
             for button in old_buttons:
                 button.draw()
@@ -134,7 +139,11 @@ class Game:
                     if event.key == pg.K_RIGHT:
                         self.right = False
                     if event.key == pg.K_SPACE:
-                        self.space = False           
+                        self.space = False
+                elif event.type == pg.MOUSEBUTTONDOWN:
+                    self.mouse = True
+                elif event.type == pg.MOUSEBUTTONUP:
+                    self.mouse = False
             menu.pause_game.has_been_called = False
             menu.ask_hint.has_been_called = False
             menu.game_buttons(screen, scales, menu.pause_game, menu.ask_hint)
@@ -152,7 +161,7 @@ class Game:
             pg.display.update()
             fpsClock.tick(fps)
 
-game = Game(screen, up, down, right, left, space)
+game = Game(screen, up, down, right, left, space, mouse)
 
 while not finished:
     screen.fill(WHITE)

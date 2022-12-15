@@ -23,6 +23,7 @@ class Player:
         self.imp=0
         self.walk_cycle = [pg.transform.scale(pg.image.load(f"pic\p1_walk{i:0>2}.png"),(self.w,self.h)) for i in range(1,12)]
         self.stop=pg.transform.scale(pg.image.load("pic\p1_front.png"),(self.w,self.h))
+        self.death = 0
         #p1_walk01.png
         #self.image = pg.image.load('test2.png').convert_alpha()
        # self.image= self.image.convert_alpha(self.image)
@@ -36,6 +37,7 @@ class Player:
                     self.y=440
                     self.vx=0
                     self.vy=0
+                    self.death += 1
 
     def oldcollision(self,platforms,screen):
         for pl in platforms:

@@ -186,7 +186,7 @@ class Door:
         self.rect = (self.x, self.y, self.w, self.h)
 
 
-def check_passage(scales, player, levels, buttons, space, player_position):
+def check_passage(scales, player, levels, buttons, space, player_position, doors, knock_count, mouse, count_mouse, last_mouse):
     '''Docstring
     Agrs:
     scales - 
@@ -199,21 +199,26 @@ def check_passage(scales, player, levels, buttons, space, player_position):
     scale_x, scale_y = scales
     player_x_last, player_y_last, count_one_position = player_position
     flag = False
+
     if levels == 0:
         for button in buttons:
             if button.push:
                 flag = True
+
     if levels == 1:
         for button in buttons:
             if button.push and player.vy > 1:
                 flag = True
+
     if levels == 2:
         if space:
             flag = True
+
     if levels == 3:
         #  90, 30, 50, 30 положения кнопки хинт: верхний левый угол, ширина, высота
         if 90 * scale_x < player.x < (90+50) * scale_x  and 30 * scale_y < player.y < (30 + 30) * scale_y:
             flag = True
+
     if levels == 4:
         if player.x == player_x_last and player.y == player_y_last:
             count_one_position += 1
@@ -223,8 +228,24 @@ def check_passage(scales, player, levels, buttons, space, player_position):
             count_one_position = 0
             player_x_last = player.x
             player_y_last = player.y
+        knock_count = 0
 
-    return flag, (player_x_last, player_y_last, count_one_position)
+    if levels == 5:
+        for door in doors:
+            if pg.Rect.colliderect(pg.Rect(player.x, player.y, player.w, player.h), pg.Rect(door.rect)):
+                knock_count += 1
+                if knock_count == 5:
+                    flag = True
+        count_mouse = 0
+    if levels == 6:
+        if mouse and not(last_mouse):
+            count_mouse += 1
+            if count_mouse > 15:
+                flag = True
+        last_mouse = mouse
+    if levels == 7:
+
+    return flag, (player_x_last, player_y_last, count_one_position), knock_count, count_mouse, last_mouse
 
 
 def update_level(screen, need_slide, width, levels, player, scales, platforms, spikes,
