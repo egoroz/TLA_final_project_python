@@ -34,6 +34,11 @@ level.scale_objects(spikes, scales)
 level.scale_objects(buttons, scales)
 level.scale_objects(doors, scales)
 
+dict = {
+    0:"0.Нулёвка по общесосу",
+    1:"1.Повторение - мать учения",
+    2:"2.Илон Маск",
+    3:"3.Возьми подсказку"}
 
 hero = player.Player(0, 440, screen)
 fps = 60
@@ -70,15 +75,6 @@ class Game:
         finished = False
         while not finished:
             self.screen.fill(WHITE)
-
-            menu.pause_game.has_been_called = False
-            menu.ask_hint.has_been_called = False
-            menu.game_buttons(screen, scales, menu.pause_game, menu.ask_hint)
-            menu.title(screen, scales, "0.Нулевка по общесосу") 
-            if menu.pause_game.has_been_called:
-                break
-            if menu.ask_hint.has_been_called == True:
-                menu.hint(screen, scales, "Работает?")
             for button in buttons:
                 button.draw()
                 button.update(hero)
@@ -119,7 +115,15 @@ class Game:
                     if event.key == pg.K_RIGHT:
                         self.right = False
                     if event.key == pg.K_SPACE:
-                        self.space = False
+                        self.space = False           
+            menu.pause_game.has_been_called = False
+            menu.ask_hint.has_been_called = False
+            menu.game_buttons(screen, scales, menu.pause_game, menu.ask_hint)
+            menu.title(screen, scales, dict, levels)
+            if menu.pause_game.has_been_called:
+                break
+            if menu.ask_hint.has_been_called == True:
+                menu.hint(screen, scales, "Работает?")
             collisable_obj = platforms.copy()
             collisable_obj.append(doors[0])
             hero.update(self.left, self.right, self.up, self.down, self.screen, collisable_obj, spikes)
@@ -128,7 +132,6 @@ class Game:
             need_slide, count_wind, tick = level.level_slide(screen, slide, need_slide, width, height, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, hero, count_wind, tick)
             pg.display.update()
             fpsClock.tick(fps)
-
 
 game = Game(screen, up, down, right, left, space)
 

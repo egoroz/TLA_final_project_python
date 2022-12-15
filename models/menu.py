@@ -45,7 +45,7 @@ class Button:
         self.font = pg.font.SysFont('Monotype Corsiva', 40)
 
         self.fillColors = {
-            'normal': '#FFE4B5',
+            'normal': '#87CEEB',
             'hover': '#778899',
             'pressed': '#333333',
         }
@@ -91,8 +91,8 @@ def start_buttons(screen, scales, func_1, func_2):
     func_1 - первая функция
     func_2 - вторая функция
     '''
-    New_game_button = Button(280, 390, 380, 60, scales, func_1, 'Play game')
-    Exit_game_button = Button(280, 460, 380, 60, scales, func_2, 'Exit game')    
+    New_game_button = Button(670, 425, 250, 50, scales, func_1, 'Play game')
+    Exit_game_button = Button(670, 485, 250, 50, scales, func_2, 'Exit game')    
 
     objects = [New_game_button, Exit_game_button]
     for object in objects:
@@ -113,7 +113,8 @@ def game_buttons(screen, scales, func_1, func_2):
     for object in objects:
         object.process(screen)
 
-def title(screen, scales, text, x = 270 , y= 50):
+
+def title(screen, scales, dict, number, x = 270 , y= 50):
     '''Отрисовывает название уровня
     Args:
     screen - экран отрисовки
@@ -122,6 +123,7 @@ def title(screen, scales, text, x = 270 , y= 50):
     scales - масштаб
     text - текст-название
     '''
+    text = dict[number]
     scale_x, scale_y = scales
     x = x*scale_x
     y = y*scale_y
@@ -134,7 +136,8 @@ def title(screen, scales, text, x = 270 , y= 50):
 def ask_hint():
     ask_hint.has_been_called = True
 
-def hint(screen, scales, text, x = 650, y = 50):
+def hint(screen, scales, number, x = 650, y = 50):
+    text = dict[number]
     scale_x, scale_y = scales
     x = x*scale_x
     y = y*scale_y
