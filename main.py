@@ -22,6 +22,8 @@ old_doors = []
 levels = 0
 slide = False
 need_slide = 0
+count_wind = -1  # номер картинки ветра
+tick = 0  # раз в сколько-то тиков меняется картинка ветра
 collisable_obj = []
 
 level.read_data(screen, platforms, spikes, buttons, doors, 'docs/objects.json')
@@ -64,10 +66,11 @@ class Game:
 
     def start_game(self):
         '''Запуск игры'''
-        global levels, old_platforms, old_spikes, old_buttons, old_doors, need_slide, slide
+        global levels, old_platforms, old_spikes, old_buttons, old_doors, need_slide, slide, count_wind, tick
         finished = False
         while not finished:
             self.screen.fill(WHITE)
+
             menu.pause_game.has_been_called = False
             menu.ask_hint.has_been_called = False
             menu.game_buttons(screen, scales, menu.pause_game, menu.ask_hint)
@@ -122,7 +125,7 @@ class Game:
             hero.update(self.left, self.right, self.up, self.down, self.screen, collisable_obj, spikes)
 
             levels, old_platforms, old_spikes, old_buttons, old_doors, slide, need_slide = level.update_level(screen, need_slide, width, levels, hero, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, slide)
-            need_slide = level.level_slide(slide, need_slide, width, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, hero)
+            need_slide, count_wind, tick = level.level_slide(screen, slide, need_slide, width, height, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, hero, count_wind, tick)
             pg.display.update()
             fpsClock.tick(fps)
 

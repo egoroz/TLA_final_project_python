@@ -66,12 +66,14 @@ class Spike:
         self.y = y
         self.w = 25
         self.h = 25
+        # self.image = pg.transform.scale(pg.image.load("pic\spike.png"), (25, 25))
         self.screen = screen
         self.color = color
 
     def draw(self):
         '''Рисует шипы на уровне'''
         pg.draw.rect(self.screen, self.color, (self.x, self.y, self.w, self.h))
+        # self.screen.blit(self.image, (self.x, self.y))
 
     def move(self):
         '''Движение шипов при прохождении'''
@@ -177,7 +179,7 @@ def check_passage(player, levels, buttons):
     if levels == 1:
         for button in buttons:
             if button.push and player.vy > 1:
-                flag += button.push
+                flag = True
     return flag
 
 
@@ -219,8 +221,8 @@ def update_level(screen, need_slide, width, levels, player, scales, platforms, s
     return levels, old_platforms, old_spikes, old_buttons, old_doors, slide, need_slide
 
 
-def level_slide(slide, need_slide, width, scales, platforms, spikes, buttons,
-                doors, old_platforms, old_spikes, old_buttons, old_doors, player):
+def level_slide(screen, slide, need_slide, width, height, scales, platforms, spikes, buttons,
+                doors, old_platforms, old_spikes, old_buttons, old_doors, player, count_wind, tick):
     if slide:
         if need_slide > 0:
             scale_x, scale_y = scales
@@ -249,4 +251,9 @@ def level_slide(slide, need_slide, width, scales, platforms, spikes, buttons,
             player.ax = 0
             player.ay = 0
             player.jump = 0
-    return need_slide
+            if tick % 10 == 0:
+                count_wind = (count_wind + 1) % 7
+            image = pg.transform.scale(pg.image.load(f"pic\_{count_wind}.png"), (width * scale_x, height*scale_y))
+            screen.blit(image, (0, 0))
+            tick += 1
+    return need_slide, count_wind, tick
