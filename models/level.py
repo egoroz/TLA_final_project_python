@@ -115,6 +115,14 @@ def read_data(screen, platforms, spikes, buttons, doors, input_file):
 
 
 class PushableButton:
+    '''Конструктор класса PushableButton
+    Args:
+    screen -
+    x -
+    y -
+    w -
+    h -
+    '''
     def __init__(self, screen, x, y, w, h):
         self.x = x
         self.y = y
@@ -143,6 +151,14 @@ class PushableButton:
 
 
 class Door:
+    '''Конструктор класса Door
+    Args:
+    screen -
+    x -
+    y -
+    w -
+    h -
+    '''
     def __init__(self, screen, x, y, w, h):
         self.x = x
         self.y = y
@@ -171,6 +187,15 @@ class Door:
 
 
 def check_passage(scales, player, levels, buttons, space, player_position):
+    '''Docstring
+    Agrs:
+    scales - 
+    player - 
+    levels -
+    buttons -
+    space -
+    player_position -
+    '''
     scale_x, scale_y = scales
     player_x_last, player_y_last, count_one_position = player_position
     flag = False
@@ -204,6 +229,26 @@ def check_passage(scales, player, levels, buttons, space, player_position):
 
 def update_level(screen, need_slide, width, levels, player, scales, platforms, spikes,
                  buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, slide):
+    '''Docstring 
+    Args:
+    screen - 
+    slide - 
+    need_slide - 
+    width - 
+    height -
+    scales -
+    platforms -
+    spikes -
+    buttons -
+    doors -
+    old_platforms -
+    old_spikes -
+    old_buttons -
+    old_doors -
+    player - 
+    count_wind -
+    tick -
+    '''
     scale_x, scale_y = scales
     if need_slide <= 0:
         slide = False
@@ -242,6 +287,26 @@ def update_level(screen, need_slide, width, levels, player, scales, platforms, s
 
 def level_slide(screen, slide, need_slide, width, height, scales, platforms, spikes, buttons,
                 doors, old_platforms, old_spikes, old_buttons, old_doors, player, count_wind, tick):
+    '''Docstring
+    Args:
+    screen - 
+    slide - 
+    need_slide - 
+    width - 
+    height -
+    scales -
+    platforms -
+    spikes -
+    buttons -
+    doors -
+    old_platforms -
+    old_spikes -
+    old_buttons -
+    old_doors -
+    player - 
+    count_wind -
+    tick -
+    '''
     if slide:
         if need_slide > 0:
             scale_x, scale_y = scales
