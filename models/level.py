@@ -179,8 +179,8 @@ def update_level(screen, need_slide, width, levels, hero, scales, platforms, spi
     scale_x, scale_y = scales
     if need_slide <= 0:
         slide = False
-    if hero.x > 900*scale_x and 250*scale_y < hero.y < 300*scale_y:
-        pg.draw.rect(screen, BROWN, (900*scale_x, 250*scale_y, 100*scale_x, 50*scale_y))
+    if hero.x > (1920//2)*scale_x and 250*scale_y < hero.y < 300*scale_y:
+        pg.draw.rect(screen, BROWN, ((1920//2)*scale_x, 250*scale_y, 100*scale_x, 50*scale_y))
         if len(platforms) > 0 and not(slide):
             old_platforms = list(platforms)
             old_spikes = list(spikes)
@@ -208,7 +208,7 @@ def update_level(screen, need_slide, width, levels, hero, scales, platforms, spi
             need_slide = width*scale_x
     return levels, old_platforms, old_spikes, old_buttons, old_doors, slide, need_slide
 
-def level_slide(slide, need_slide, width, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors):
+def level_slide(slide, need_slide, width, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, player):
     if slide:
         if need_slide>0:
             scale_x, scale_y = scales
@@ -231,4 +231,5 @@ def level_slide(slide, need_slide, width, scales, platforms, spikes, buttons, do
                 bt.x -= d
             for dr in old_doors:
                 dr.x -= d
+            player.x -= d
     return need_slide

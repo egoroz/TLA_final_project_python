@@ -124,7 +124,7 @@ class Game:
             hero.update(self.left, self.right, self.up, self.down, self.screen, collisable_obj, spikes)
 
             levels, old_platforms, old_spikes, old_buttons, old_doors, slide, need_slide = level.update_level(screen, need_slide, width, levels, hero, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, slide)
-            need_slide = level.level_slide(slide, need_slide, width, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors)
+            need_slide = level.level_slide(slide, need_slide, width, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, hero)
             # print(platforms, old_spikes, old_buttons, old_doors)
             print(levels)
             #print(sys_width, sys_height)
