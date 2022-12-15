@@ -117,5 +117,16 @@ def game_buttons(screen, scales, func_1, func_2):
     objects = [Pause_button, Hint_button]
     for object in objects:
         object.process(screen)
+
+def title(screen, x, y, scales, text):
+    
+    scale_x, scale_y = scales
+    x = x*scale_x
+    y = y*scale_y
+    font = pg.font.SysFont('Monotype Corsiva', 40)
+    text_surface = font.render(text, True, BLACK)
+    text_rect = text_surface.get_rect()
+    text_rect.center = (x, y)
+    screen.blit(text_surface, text_rect)
     
 
