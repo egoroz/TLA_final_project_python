@@ -105,7 +105,8 @@ class Player:
             if self.animation_index < len(self.walk_cycle)-1:
                 self.animation_index += 1
             else:
-                self.animation_index = 0            
+                self.animation_index = 0  
+                          
     def draw(self, screen):
         '''Добавь докстринг'''
         image_rect = self.image.get_rect()

@@ -67,10 +67,13 @@ class Game:
         while not finished:
             self.screen.fill(WHITE)
             menu.pause_game.has_been_called = False
-            menu.game_buttons(screen, scales, menu.pause_game, menu.hint)
-            menu.title(screen, 270, 50, scales, "1.Нулевка по общесосу")  
+            menu.ask_hint.has_been_called = False
+            menu.game_buttons(screen, scales, menu.pause_game, menu.ask_hint)
+            menu.title(screen, scales, "0.Нулевка по общесосу") 
             if menu.pause_game.has_been_called:
                 break
+            if menu.ask_hint.has_been_called == True:
+                menu.hint(screen, scales, "Работает?")
             for button in buttons:
                 button.draw()
                 button.update(hero)
