@@ -1,5 +1,3 @@
-import copy
-
 import pygame as pg
 import json
 
@@ -9,6 +7,7 @@ WHITE = (200, 200, 200)
 CYAN = (0, 150, 150)
 BLACK = (0, 0, 0)
 BROWN = (100, 50, 20)
+
 
 def scale_objects(objects, scales):
     '''Скейлит объекты под разрешение экрана пользователя
@@ -23,6 +22,7 @@ def scale_objects(objects, scales):
         object.w *= scale_x
         object.y *= scale_y
         object.h *= scale_y
+
 
 class Platform:
     '''Конструктор класса Platform
@@ -76,8 +76,10 @@ class Spike:
     def move(self):
         '''Движение шипов при прохождении'''
         self.x -= 0.1
+
     def make_rect(self):
         return pg.Rect(self.x, self.y, self.w, self.h)
+
 
 def read_data(screen, platforms, spikes, buttons, doors, input_file):
     '''Считывает данные о расположении платформ и шипов с файла input_file
@@ -121,6 +123,7 @@ class PushableButton:
         self.screen = screen
         self.c = 0  # на сколько пикселей опустилось вниз
         self.push = False
+
     def update(self, obj):
         if pg.Rect.colliderect(pg.Rect(obj.x, obj.y, obj.w, obj.h), self.rect):
             self.y += 1
@@ -132,8 +135,10 @@ class PushableButton:
                 self.c -= 1
             self.push = False
         self.rect = pg.Rect(self.x, self.y, self.w, self.h)
+
     def draw(self):
         pg.draw.rect(self.screen, self.color, (self.x, self.y, self.w, self.h))
+
 
 class Door:
     def __init__(self, screen, x, y, w, h):
@@ -154,8 +159,10 @@ class Door:
         if self.opened and self.c < 200:
             self.y -= 1
             self.c += 1
+
     def make_rect(self):
         return pg.Rect(self.x, self.y, self.w, self.h)
+
     def draw(self):
         pg.draw.rect(self.screen, self.color, (self.x, self.y, self.w, self.h))
         self.rect = (self.x, self.y, self.w, self.h)
@@ -174,9 +181,8 @@ def check_passage(player, levels, buttons):
     return flag
 
 
-
-
-def update_level(screen, need_slide, width, levels, player, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, slide):
+def update_level(screen, need_slide, width, levels, player, scales, platforms, spikes,
+                 buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, slide):
     scale_x, scale_y = scales
     if need_slide <= 0:
         slide = False
@@ -212,9 +218,11 @@ def update_level(screen, need_slide, width, levels, player, scales, platforms, s
             need_slide = width*scale_x
     return levels, old_platforms, old_spikes, old_buttons, old_doors, slide, need_slide
 
-def level_slide(slide, need_slide, width, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, player):
+
+def level_slide(slide, need_slide, width, scales, platforms, spikes, buttons,
+                doors, old_platforms, old_spikes, old_buttons, old_doors, player):
     if slide:
-        if need_slide>0:
+        if need_slide > 0:
             scale_x, scale_y = scales
             need_slide -= width*scale_x/200
             d = width*scale_x/200
