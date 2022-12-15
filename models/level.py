@@ -42,6 +42,7 @@ class Platform:
         self.screen = screen
     
     def make_rect(self):
+        '''Делает прямоугольник для платформы'''
         return pg.Rect(self.x, self.y, self.w, self.h)
     
     def draw(self):
@@ -186,7 +187,7 @@ class Door:
         self.rect = (self.x, self.y, self.w, self.h)
 
 
-def check_passage(scales, player, levels, buttons, space, player_position, doors, knock_count, mouse, count_mouse, last_mouse, now_death):
+def check_passage(scales, player, levels, buttons, space, player_position, doors, knock_count, mouse, count_mouse, last_mouse):
     '''Docstring
     Agrs:
     scales - 
@@ -243,11 +244,9 @@ def check_passage(scales, player, levels, buttons, space, player_position, doors
             if count_mouse > 15:
                 flag = True
         last_mouse = mouse
-        now_death = player.death
     if levels == 7:
-        if player.death - now_death == 9:
-            flag = True
-    return flag, (player_x_last, player_y_last, count_one_position), knock_count, count_mouse, last_mouselj
+
+    return flag, (player_x_last, player_y_last, count_one_position), knock_count, count_mouse, last_mouse
 
 
 def update_level(screen, need_slide, width, levels, player, scales, platforms, spikes,
