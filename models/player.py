@@ -81,7 +81,7 @@ class Player:
         if self.vy<0 and not self.collision_in_future('u',platforms):
             self.y+=self.vy
 
-    def collision_in_future(self,dir,platforms):
+    def collision_in_future(self, dir, platforms):
         '''колизится'''
         d=7
         plats=[]

@@ -174,11 +174,11 @@ def check_passage(player, levels, objects):
 
 
 
-def update_level(screen, levels, hero, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors):
+def update_level(screen, need_slide, width, levels, hero, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, slide):
     scale_x, scale_y = scales
-    if hero.x > 850*scale_x and 250*scale_y < hero.y < 300*scale_y:
-        pg.draw.rect(screen, BROWN, (850*scale_x, 250*scale_y, 100*scale_x, 50*scale_y))
-        if len(platforms) > 0:
+    if hero.x > 900*scale_x and 250*scale_y < hero.y < 300*scale_y:
+        pg.draw.rect(screen, BROWN, (900*scale_x, 250*scale_y, 100*scale_x, 50*scale_y))
+        if len(platforms) > 0 and not(slide):
             old_platforms = list(platforms)
             old_spikes = list(spikes)
             old_buttons = list(buttons)
@@ -193,6 +193,40 @@ def update_level(screen, levels, hero, scales, platforms, spikes, buttons, doors
             scale_objects(buttons, scales)
             scale_objects(doors, scales)
             for pl in platforms:
-                pl.x += 1
-    return levels, old_platforms, old_spikes, old_buttons, old_doors
+                pl.x += width*scale_x
+            for sp in spikes:
+                sp.x += width*scale_x
+            for bt in buttons:
+                bt.x += width*scale_x
+            for dr in doors:
+                dr.x += width*scale_x
+            levels += 1
+            slide = True
+            need_slide = width*scale_x
+    return levels, old_platforms, old_spikes, old_buttons, old_doors, slide, need_slide
 
+def level_slide(slide, need_slide, width, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors):
+    if slide:
+        if need_slide>0:
+            scale_x, scale_y = scales
+            need_slide -= width*scale_x/200
+            d = width*scale_x/200
+            for pl in platforms:
+                pl.x -= d
+            for sp in spikes:
+                sp.x -= d
+            for bt in buttons:
+                bt.x -= d
+            for dr in doors:
+                dr.x -= d
+
+            for pl in old_platforms:
+                pl.x -= d
+            for sp in old_spikes:
+                sp.x -= d
+            for bt in old_buttons:
+                bt.x -= d
+            for dr in old_doors:
+                dr.x -= d
+
+    return need_slide
