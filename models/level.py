@@ -170,7 +170,7 @@ class Door:
         self.rect = (self.x, self.y, self.w, self.h)
 
 
-def check_passage(player, levels, buttons):
+def check_passage(player, levels, buttons, space):
     flag = False
     if levels == 0:
         for button in buttons:
@@ -180,6 +180,9 @@ def check_passage(player, levels, buttons):
         for button in buttons:
             if button.push and player.vy > 1:
                 flag = True
+    if levels == 2:
+        if space:
+            flag = True
     return flag
 
 

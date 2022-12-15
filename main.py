@@ -19,7 +19,7 @@ old_platforms = []
 old_spikes = []
 old_buttons = []
 old_doors = []
-levels = 0
+levels = 2
 slide = False
 need_slide = 0
 count_wind = -1  # номер картинки ветра
@@ -84,7 +84,7 @@ class Game:
                 spike.draw()
             for door in doors:
                 door.draw()
-                door.update(level.check_passage(hero, levels, buttons))
+                door.update(level.check_passage(hero, levels, buttons, self.space))
             for button in old_buttons:
                 button.draw()
                 button.update(hero)
@@ -94,7 +94,6 @@ class Game:
                 spike.draw()
             for door in old_doors:
                 door.draw()
-                door.update(level.check_passage(hero, levels, buttons))
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     finished = True
