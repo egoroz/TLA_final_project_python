@@ -36,6 +36,7 @@ class Player:
                     self.y=440
                     self.vx=0
                     self.vy=0
+                    self.death += 1
 
     def oldcollision(self,platforms):
         '''Коллизия платформ'''
