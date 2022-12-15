@@ -114,8 +114,9 @@ class Game:
             hero.update(self.left, self.right, self.up, self.down, self.screen, platforms, spikes)
 
             levels, old_platforms, old_spikes, old_buttons, old_doors = level.update_level(screen, levels, hero, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors)
-            print(platforms, old_spikes, old_buttons, old_doors)
-            print(levels)
+            # print(platforms, old_spikes, old_buttons, old_doors)
+            # print(levels)
+            print(sys_width, sys_height)
             pg.display.update()
             fpsClock.tick(fps)
 

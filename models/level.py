@@ -187,10 +187,12 @@ def update_level(screen, levels, hero, scales, platforms, spikes, buttons, doors
             del doors[:]
             del spikes[:]
             del buttons[:]
-            read_data(screen, platforms, spikes, buttons, doors, 'objects.json')
+            read_data(screen, platforms, spikes, buttons, doors, 'docs/objects.json')
             scale_objects(platforms, scales)
             scale_objects(spikes, scales)
             scale_objects(buttons, scales)
             scale_objects(doors, scales)
+            for pl in platforms:
+                pl.x += 1
     return levels, old_platforms, old_spikes, old_buttons, old_doors
 
