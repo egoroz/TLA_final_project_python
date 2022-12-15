@@ -20,6 +20,7 @@ class Player:
         self.g = 0.25
         self.animation_index=0
         self.land=False
+        self.imp=0
         self.walk_cycle = [pg.transform.scale(pg.image.load(f"pic\p1_walk{i:0>2}.png"),(self.w,self.h)) for i in range(1,12)]
         self.stop=pg.transform.scale(pg.image.load("pic\p1_front.png"),(self.w,self.h))
         #p1_walk01.png
@@ -39,7 +40,7 @@ class Player:
     def oldcollision(self,platforms,screen):
         for pl in platforms:
             #print(pl)
-            d=7
+            d=6
             
            # pg.draw.rect(screen,(0,0,255),(self.x,self.y+d, 2 ,self.h-3*d))
            #pg.draw.rect(screen,(255,0,255),(self.x+self.w,self.y+d,2,self.h-3*d))
@@ -88,7 +89,7 @@ class Player:
         for pl in platforms:
             plats.append(pl.make_rect())
         if dir=='d':
-            if pg.Rect(self.x,self.y+self.h+self.vy,self.w,2).collidelist(plats)!=-1: 
+            if pg.Rect(self.x,self.y+self.h+2,self.w,2).collidelist(plats)!=-1: 
                 self.land=True
                 self.vy=0
             return pg.Rect(self.x,self.y+self.h+1,self.w,2).collidelist(plats)!=-1
@@ -121,6 +122,7 @@ class Player:
 
     def update(self, left, right, up, down, screen, platforms,spikes):
         '''Добавь докстринг'''
+
         if left:
             self.vx = max(-self.maxv, self.vx-self.ax)
         if right:
