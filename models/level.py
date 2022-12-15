@@ -154,9 +154,6 @@ class Door:
         if self.opened and self.c < 200:
             self.y -= 1
             self.c += 1
-        elif self.c > 0:
-            self.y += 1
-            self.c -= 1
     def make_rect(self):
         return pg.Rect(self.x, self.y, self.w, self.h)
     def draw(self):
@@ -164,11 +161,15 @@ class Door:
         self.rect = (self.x, self.y, self.w, self.h)
 
 
-def check_passage(player, levels, objects):
+def check_passage(player, levels, buttons):
     flag = False
     if levels == 0:
-        for obj in objects:
-            flag += obj.push
+        for button in buttons:
+            flag += button.push
+    if levels == 1:
+        for button in buttons:
+            if button.push and not(player.land):
+                flag += button.push
     return flag
 
 
@@ -176,6 +177,8 @@ def check_passage(player, levels, objects):
 
 def update_level(screen, need_slide, width, levels, hero, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, slide):
     scale_x, scale_y = scales
+    if need_slide <= 0:
+        slide = False
     if hero.x > 900*scale_x and 250*scale_y < hero.y < 300*scale_y:
         pg.draw.rect(screen, BROWN, (900*scale_x, 250*scale_y, 100*scale_x, 50*scale_y))
         if len(platforms) > 0 and not(slide):
@@ -228,5 +231,4 @@ def level_slide(slide, need_slide, width, scales, platforms, spikes, buttons, do
                 bt.x -= d
             for dr in old_doors:
                 dr.x -= d
-
     return need_slide

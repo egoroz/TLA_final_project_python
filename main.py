@@ -123,7 +123,7 @@ class Game:
             levels, old_platforms, old_spikes, old_buttons, old_doors, slide, need_slide = level.update_level(screen, need_slide, width, levels, hero, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, slide)
             need_slide = level.level_slide(slide, need_slide, width, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors)
             # print(platforms, old_spikes, old_buttons, old_doors)
-            # print(levels)
+            print(levels)
             #print(sys_width, sys_height)
             pg.display.update()
             fpsClock.tick(fps)
