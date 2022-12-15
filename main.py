@@ -15,6 +15,10 @@ platforms = []
 spikes = []
 buttons = []
 doors = []
+old_platforms = []
+old_spikes = []
+old_buttons = []
+old_doors = []
 levels = 0
 
 
@@ -47,18 +51,18 @@ class Game:
     platforms - список платформ
     spikes - список шипов
     '''
-    def __init__(self, screen, platforms, spikes, up, down, right, left, space):
+    def __init__(self, screen, up, down, right, left, space):
         self.screen = screen
-        self.platforms = platforms
-        self.spikes = spikes
+
         self.up = up
         self.down = down
         self.right = right
         self.left = left
         self.space = space
-        self.platforms.append(doors[0])
+
     def start_game(self):
         '''Запуск игры'''
+        global levels, old_platforms, old_spikes, old_buttons, old_doors
         finished = False
         while not finished:
             self.screen.fill(WHITE)
@@ -69,10 +73,23 @@ class Game:
             for button in buttons:
                 button.draw()
                 button.update(hero)
-            for platform in self.platforms:
+            for platform in platforms:
                 platform.draw()
-            for spike in self.spikes:
+            for spike in spikes:
                 spike.draw()
+            for door in doors:
+                door.draw()
+                door.update(level.check_passage(hero, levels, buttons))
+            for button in old_buttons:
+                button.draw()
+                button.update(hero)
+            for platform in old_platforms:
+                platform.draw()
+            for spike in old_spikes:
+                spike.draw()
+            for door in old_doors:
+                door.draw()
+                door.update(level.check_passage(hero, levels, buttons))
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     finished = True
@@ -94,17 +111,16 @@ class Game:
                         self.right = False
                     if event.key==pg.K_SPACE:
                         self.space = False
-            hero.update(self.left, self.right, self.up, self.down, self.screen, self.platforms,self.spikes)
-            for door in doors:
-                door.draw()
-                door.update(level.check_passage(hero, buttons))
+            hero.update(self.left, self.right, self.up, self.down, self.screen, platforms, spikes)
 
-            level.update_level(screen, levels, hero, scales)
-
+            levels, old_platforms, old_spikes, old_buttons, old_doors = level.update_level(screen, levels, hero, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors)
+            print(platforms, old_spikes, old_buttons, old_doors)
+            print(levels)
             pg.display.update()
             fpsClock.tick(fps)
 
-game = Game(screen, platforms, spikes, up, down, right, left, space)
+
+game = Game(screen, up, down, right, left, space)
 
 while not finished:
     screen.fill(WHITE)

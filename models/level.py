@@ -1,3 +1,5 @@
+import copy
+
 import pygame as pg
 import json
 
@@ -162,19 +164,33 @@ class Door:
         self.rect = (self.x, self.y, self.w, self.h)
 
 
-def check_passage(player, objects):
+def check_passage(player, levels, objects):
     flag = False
-    for obj in objects:
-        flag += obj.push
+    if levels == 0:
+        for obj in objects:
+            flag += obj.push
     return flag
 
 
 
 
-def update_level(screen, levels, hero, scales):
+def update_level(screen, levels, hero, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors):
     scale_x, scale_y = scales
-    if hero.x > 900*scale_x and 250*scale_y < hero.y < 300*scale_y:
-        pg.draw.rect(screen, BROWN, (900*scale_x, 250*scale_y, 100*scale_x, 50*scale_y))
-
-    return levels + 1
+    if hero.x > 850*scale_x and 250*scale_y < hero.y < 300*scale_y:
+        pg.draw.rect(screen, BROWN, (850*scale_x, 250*scale_y, 100*scale_x, 50*scale_y))
+        if len(platforms) > 0:
+            old_platforms = list(platforms)
+            old_spikes = list(spikes)
+            old_buttons = list(buttons)
+            old_doors = list(doors)
+            del platforms[:]
+            del doors[:]
+            del spikes[:]
+            del buttons[:]
+            read_data(screen, platforms, spikes, buttons, doors, 'objects.json')
+            scale_objects(platforms, scales)
+            scale_objects(spikes, scales)
+            scale_objects(buttons, scales)
+            scale_objects(doors, scales)
+    return levels, old_platforms, old_spikes, old_buttons, old_doors
 
