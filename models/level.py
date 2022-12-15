@@ -130,6 +130,7 @@ class PushableButton:
             if self.c:
                 self.y -= 1
                 self.c -= 1
+            self.push = False
         self.rect = pg.Rect(self.x, self.y, self.w, self.h)
     def draw(self):
         pg.draw.rect(self.screen, self.color, (self.x, self.y, self.w, self.h))
@@ -149,8 +150,7 @@ class Door:
     def update(self, func):
         if func:
             self.opened = True
-        else:
-            self.opened = False
+
         if self.opened and self.c < 200:
             self.y -= 1
             self.c += 1
@@ -165,21 +165,25 @@ def check_passage(player, levels, buttons):
     flag = False
     if levels == 0:
         for button in buttons:
-            flag += button.push
+            if button.push:
+                flag = True
     if levels == 1:
         for button in buttons:
-            if button.push and not(player.land):
+            if button.push and player.vy > 1:
                 flag += button.push
     return flag
 
 
 
 
-def update_level(screen, need_slide, width, levels, hero, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, slide):
+def update_level(screen, need_slide, width, levels, player, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, slide):
     scale_x, scale_y = scales
     if need_slide <= 0:
         slide = False
-    if hero.x > (1920//2)*scale_x and 250*scale_y < hero.y < 300*scale_y:
+        player.ax = 0.5
+        player.ay = 1
+        player.jump = -10
+    if player.x > (1920//2)*scale_x and 250*scale_y < player.y < 300*scale_y:
         pg.draw.rect(screen, BROWN, ((1920//2)*scale_x, 250*scale_y, 100*scale_x, 50*scale_y))
         if len(platforms) > 0 and not(slide):
             old_platforms = list(platforms)
@@ -232,4 +236,9 @@ def level_slide(slide, need_slide, width, scales, platforms, spikes, buttons, do
             for dr in old_doors:
                 dr.x -= d
             player.x -= d
+            player.vx = 0
+            player.vy = 0
+            player.ax = 0
+            player.ay = 0
+            player.jump = 0
     return need_slide
