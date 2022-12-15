@@ -22,10 +22,10 @@ old_doors = []
 levels = 0
 slide = False
 need_slide = 0
-collisable_obj=[]
+collisable_obj = []
 
 level.read_data(screen, platforms, spikes, buttons, doors, 'docs/objects.json')
-collisable_obj=platforms.copy()
+collisable_obj = platforms.copy()
 collisable_obj.append(doors[0])
 level.scale_objects(platforms, scales)
 level.scale_objects(spikes, scales)
@@ -41,7 +41,6 @@ pg.init()
 theme = menu.Theme("pic/background.png", sys_width, sys_height)
 
 finished = False
-d=2
 left = False
 right = False
 up = False
@@ -57,7 +56,6 @@ class Game:
     '''
     def __init__(self, screen, up, down, right, left, space):
         self.screen = screen
-
         self.up = up
         self.down = down
         self.right = right
@@ -101,33 +99,30 @@ class Game:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     finished = True
-                elif event.type==pg.KEYDOWN:
-                    if event.key==pg.K_UP:
+                elif event.type == pg.KEYDOWN:
+                    if event.key == pg.K_UP:
                         self.up = True
-                    if event.key==pg.K_LEFT:
+                    if event.key == pg.K_LEFT:
                         self.left = True
-                    if event.key==pg.K_RIGHT:
+                    if event.key == pg.K_RIGHT:
                         self.right = True
-                    if event.key==pg.K_SPACE:
+                    if event.key == pg.K_SPACE:
                         self.space = True
-                elif event.type==pg.KEYUP:
-                    if event.key==pg.K_UP:
+                elif event.type == pg.KEYUP:
+                    if event.key == pg.K_UP:
                         self.up = False
-                    if event.key==pg.K_LEFT:
+                    if event.key == pg.K_LEFT:
                         self.left = False
-                    if event.key==pg.K_RIGHT:
+                    if event.key == pg.K_RIGHT:
                         self.right = False
-                    if event.key==pg.K_SPACE:
+                    if event.key == pg.K_SPACE:
                         self.space = False
-            collisable_obj=platforms.copy()
+            collisable_obj = platforms.copy()
             collisable_obj.append(doors[0])
             hero.update(self.left, self.right, self.up, self.down, self.screen, collisable_obj, spikes)
 
             levels, old_platforms, old_spikes, old_buttons, old_doors, slide, need_slide = level.update_level(screen, need_slide, width, levels, hero, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, slide)
             need_slide = level.level_slide(slide, need_slide, width, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, hero)
-            # print(platforms, old_spikes, old_buttons, old_doors)
-            print(levels)
-            #print(sys_width, sys_height)
             pg.display.update()
             fpsClock.tick(fps)
 
@@ -139,8 +134,8 @@ while not finished:
     theme.init_theme(screen)
     menu.start_buttons(screen, scales, game.start_game, pg.quit)
     for event in pg.event.get():
-                if event.type == pg.QUIT:
-                    finished = True
+        if event.type == pg.QUIT:
+            finished = True
     pg.display.update()
     fpsClock.tick(fps)
 
