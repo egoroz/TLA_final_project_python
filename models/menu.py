@@ -134,9 +134,17 @@ def title(screen, scales, dict, number, x = 270, y = 50):
     screen.blit(text_surface, text_rect)
 
 def ask_hint():
+    '''Возвращает True, если нажать на хинт'''
     ask_hint.has_been_called = True
 
 def hint(screen, scales, dict, number, x = 700, y = 50):
+    '''Отображение хинта при нажатии
+    Args:
+    screen - экран
+    scales - скейлинг
+    dict - используемый словарь
+    number - ключ для словаря
+    '''
     text = dict[number]
     scale_x, scale_y = scales
     x = x*scale_x
