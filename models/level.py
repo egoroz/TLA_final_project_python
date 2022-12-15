@@ -62,7 +62,7 @@ class Spike:
     y - положение по игреку
     color - цвет
     '''
-    def __init__(self, screen, x, y, color=CYAN):
+    def __init__(self, screen, x, y, a, color=CYAN):
         self.x = x
         self.y = y
         self.w = 25
@@ -194,7 +194,7 @@ class Door:
 
 
 def check_passage(scales, player, levels, buttons, space, player_position, doors, knock_count, mouse, count_mouse, last_mouse, now_death):
-    '''Docstring
+    '''
     Agrs:
     scales - скейлинг
     player - игрок
@@ -244,6 +244,7 @@ def check_passage(scales, player, levels, buttons, space, player_position, doors
                 if knock_count == 5:
                     flag = True
         count_mouse = 0
+
     if levels == 6:
         if mouse and not(last_mouse):
             count_mouse += 1
@@ -251,6 +252,7 @@ def check_passage(scales, player, levels, buttons, space, player_position, doors
                 flag = True
         last_mouse = mouse
         now_death = player.death
+
     if levels == 7:
         if player.death - now_death >= 9:
             flag = True
