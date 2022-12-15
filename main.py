@@ -18,7 +18,7 @@ doors = []
 levels = 0
 
 
-level.read_data(screen, platforms, spikes, buttons, doors, 'objects.json')
+level.read_data(screen, platforms, spikes, buttons, doors, 'docs/objects.json')
 level.scale_objects(platforms, scales)
 level.scale_objects(spikes, scales)
 level.scale_objects(buttons, scales)
@@ -30,7 +30,7 @@ fps = 60
 fpsClock = pg.time.Clock()
 pg.init()
 
-theme = menu.Theme('background.png', sys_width, sys_height)
+theme = menu.Theme("pic/background.png", sys_width, sys_height)
 
 finished = False
 d=2
