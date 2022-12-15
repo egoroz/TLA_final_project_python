@@ -20,9 +20,13 @@ old_spikes = []
 old_buttons = []
 old_doors = []
 levels = 0
-
+slide = False
+need_slide = 0
+collisable_obj=[]
 
 level.read_data(screen, platforms, spikes, buttons, doors, 'docs/objects.json')
+collisable_obj=platforms.copy()
+collisable_obj.append(doors[0])
 level.scale_objects(platforms, scales)
 level.scale_objects(spikes, scales)
 level.scale_objects(buttons, scales)
@@ -62,7 +66,7 @@ class Game:
 
     def start_game(self):
         '''Запуск игры'''
-        global levels, old_platforms, old_spikes, old_buttons, old_doors
+        global levels, old_platforms, old_spikes, old_buttons, old_doors, need_slide, slide
         finished = False
         while not finished:
             self.screen.fill(WHITE)
@@ -115,11 +119,15 @@ class Game:
                         self.right = False
                     if event.key==pg.K_SPACE:
                         self.space = False
-            hero.update(self.left, self.right, self.up, self.down, self.screen, platforms, spikes)
+            collisable_obj=platforms.copy()
+            collisable_obj.append(doors[0])
+            hero.update(self.left, self.right, self.up, self.down, self.screen, collisable_obj, spikes)
 
-            levels, old_platforms, old_spikes, old_buttons, old_doors = level.update_level(screen, levels, hero, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors)
-            print(platforms, old_spikes, old_buttons, old_doors)
-            print(levels)
+            levels, old_platforms, old_spikes, old_buttons, old_doors, slide, need_slide = level.update_level(screen, need_slide, width, levels, hero, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, slide)
+            need_slide = level.level_slide(slide, need_slide, width, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors)
+            # print(platforms, old_spikes, old_buttons, old_doors)
+            # print(levels)
+            #print(sys_width, sys_height)
             pg.display.update()
             fpsClock.tick(fps)
 

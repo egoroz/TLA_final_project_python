@@ -9,7 +9,7 @@ class Player:
     w = 60
    
     def __init__(self, x, y, sc) -> None:
-        '''Добавь докстринг'''
+        
         self.x = x
         self.y = y
         self.vx = 0
@@ -66,6 +66,12 @@ class Player:
                    # self.y=-self.h+pl.y
                 
     def move(self,platforms):
+        '''Передвижение
+
+    Args:
+    objects - список объектов для скейла
+    scales - масштабирование
+    '''
         if self.vx>0 and  not self.collision_in_future('r',platforms):
             self.x+=self.vx
         if self.vx<0 and not self.collision_in_future('l',platforms):
@@ -75,7 +81,8 @@ class Player:
         if self.vy<0 and not self.collision_in_future('u',platforms):
             self.y+=self.vy
 
-    def collision_in_future(self,dir,platforms):
+    def collision_in_future(self, dir, platforms):
+        '''колизится'''
         d=7
         plats=[]
         for pl in platforms:
@@ -86,7 +93,7 @@ class Player:
                 self.vy=0
             return pg.Rect(self.x,self.y+self.h+1,self.w,2).collidelist(plats)!=-1
         if dir=='l':
-            return pg.Rect(self.x-1,self.y+d, 2 ,self.h-3*d).collidelist(plats)!=-1
+            return pg.Rect(self.x-1,self.y+d, 2 ,self.h-3*d).collidelist(plats)!=-1 or self.x<5
         if dir=='r':
             return pg.Rect(self.x+self.w+1,self.y+d,2,self.h-3*d).collidelist(plats)!=-1
         if dir=='u':
