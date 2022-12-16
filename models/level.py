@@ -30,8 +30,8 @@ class Platform:
     screen - экран
     x - координата по иксу
     y - координата по игреку
-    xx - ширина
-    yy - высота
+    w - ширина
+    h - высота
     '''
     def __init__(self, screen, x, y, w, h):
         self.x = x
@@ -57,10 +57,10 @@ class Platform:
 class Spike:
     '''Конструктор класса Spike
     Args:
-    screen - 
-    x -
-    y -
-    color -
+    screen - экран
+    x - положение по иксу
+    y - положение по игреку
+    color - цвет
     '''
     def __init__(self, screen, x, y, a, color=CYAN):
         self.x = x
@@ -81,6 +81,7 @@ class Spike:
         self.x -= 0.1
 
     def make_rect(self):
+        '''Делает прямоугольник для шипа'''
         return pg.Rect(self.x, self.y, self.w, self.h)
 
 
@@ -90,6 +91,8 @@ def read_data(screen, platforms, spikes, buttons, doors, input_file):
     screen - экран
     platforms - список платформ, куда идет запись
     spikes - список шипов, куда идет запись
+    buttons - список кнопок
+    doors - список дверей
     input_file - файл считывания
     '''
     with open(input_file, 'r') as file:
@@ -118,11 +121,11 @@ def read_data(screen, platforms, spikes, buttons, doors, input_file):
 class PushableButton:
     '''Конструктор класса PushableButton
     Args:
-    screen -
-    x -
-    y -
-    w -
-    h -
+    screen - экран
+    x - положение по иксу
+    y - положение по игреку
+    w - ширина
+    h - высота
     '''
     def __init__(self, screen, x, y, w, h):
         self.x = x
@@ -136,6 +139,7 @@ class PushableButton:
         self.push = False
 
     def update(self, obj):
+        '''Обновляет объект obj'''
         if pg.Rect.colliderect(pg.Rect(obj.x, obj.y, obj.w, obj.h), self.rect):
             self.y += 1
             self.c += 1
@@ -148,17 +152,18 @@ class PushableButton:
         self.rect = pg.Rect(self.x, self.y, self.w, self.h)
 
     def draw(self):
+        '''Отрисовка'''
         pg.draw.rect(self.screen, self.color, (self.x, self.y, self.w, self.h))
 
 
 class Door:
     '''Конструктор класса Door
     Args:
-    screen -
-    x -
-    y -
-    w -
-    h -
+    screen - экран
+    x - положение по иксу
+    y - положение по игреку
+    w - ширина
+    h - высота
     '''
     def __init__(self, screen, x, y, w, h):
         self.x = x
@@ -172,6 +177,7 @@ class Door:
         self.c = 0  # на сколько пикселей поднялась дверь
 
     def update(self, func):
+        '''Обновляет положение двери если выполнена функция func'''
         if func:
             self.opened = True
 
@@ -188,14 +194,14 @@ class Door:
 
 
 def check_passage(scales, player, levels, buttons, space, player_position, doors, knock_count, mouse, count_mouse, last_mouse, now_death):
-    '''Docstring
+    '''
     Agrs:
-    scales - 
-    player - 
-    levels -
-    buttons -
-    space -
-    player_position -
+    scales - скейлинг
+    player - игрок
+    levels - номер уровня, для которого проводится проверка
+    buttons - кнопки
+    space - пробел
+    player_position - позиция игрока
     '''
     scale_x, scale_y = scales
     player_x_last, player_y_last, count_one_position = player_position
@@ -238,6 +244,7 @@ def check_passage(scales, player, levels, buttons, space, player_position, doors
                 if knock_count == 5:
                     flag = True
         count_mouse = 0
+
     if levels == 6:
         if mouse and not(last_mouse):
             count_mouse += 1
@@ -245,6 +252,7 @@ def check_passage(scales, player, levels, buttons, space, player_position, doors
                 flag = True
         last_mouse = mouse
         now_death = player.death
+
     if levels == 7:
         if player.death - now_death >= 9:
             flag = True
@@ -261,25 +269,25 @@ def check_passage(scales, player, levels, buttons, space, player_position, doors
 
 def update_level(screen, need_slide, width, levels, player, scales, platforms, spikes,
                  buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, slide):
-    '''Docstring 
+    '''Обновление уровня
     Args:
-    screen - 
-    slide - 
-    need_slide - 
-    width - 
-    height -
-    scales -
-    platforms -
-    spikes -
-    buttons -
-    doors -
-    old_platforms -
-    old_spikes -
-    old_buttons -
-    old_doors -
-    player - 
-    count_wind -
-    tick -
+    screen - экран
+    slide - флаг скольжения
+    need_slide - остаток скольжения
+    width - ширина
+    height - высота
+    scales - скейлинг
+    platforms - список платформ
+    spikes - список шипов
+    buttons - список
+    doors - дверь
+    old_platforms - платформы, которые исчезнут при слайде
+    old_spikes - шипы, которые исчезнут при слайде
+    old_buttons - кнопки, которые исчезнут при слайде
+    old_doors - дверь
+    player - игрок
+    count_wind - счетчик изображения ветра
+    tick - счетчик обновления главного цикла
     '''
     scale_x, scale_y = scales
     if need_slide <= 0:
@@ -319,25 +327,25 @@ def update_level(screen, need_slide, width, levels, player, scales, platforms, s
 
 def level_slide(screen, slide, need_slide, width, height, scales, platforms, spikes, buttons,
                 doors, old_platforms, old_spikes, old_buttons, old_doors, player, count_wind, tick):
-    '''Docstring
+    '''Скольжение уровня
     Args:
-    screen - 
-    slide - 
-    need_slide - 
-    width - 
-    height -
-    scales -
-    platforms -
-    spikes -
-    buttons -
-    doors -
-    old_platforms -
-    old_spikes -
-    old_buttons -
-    old_doors -
-    player - 
-    count_wind -
-    tick -
+    screen - экран
+    slide - флаг скольжения
+    need_slide - остаток скольжения
+    width - ширина
+    height - высота
+    scales - скейлинг
+    platforms - список платформ
+    spikes - список шипов
+    buttons - список
+    doors - дверь
+    old_platforms - платформы, которые исчезнут при слайде
+    old_spikes - шипы, которые исчезнут при слайде
+    old_buttons - кнопки, которые исчезнут при слайде
+    old_doors - дверь
+    player - игрок
+    count_wind - счетчик изображения ветра
+    tick - счетчик обновления главного цикла
     '''
     if slide:
         if need_slide > 0:
