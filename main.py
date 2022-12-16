@@ -12,7 +12,7 @@ width, height = 1920//2, 1080//2
 sys_width, sys_height = pg.display.Info().current_w, pg.display.Info().current_h
 scales = (sys_width/width, sys_height/height)
 screen = pg.display.set_mode((sys_width, sys_height))
-pg.mixer.music.load("Soundtrack.wav")
+pg.mixer.music.load("music/Soundtrack.wav")
 pg.mixer.music.play(-1)
 
 WHITE = (200, 200, 200)
