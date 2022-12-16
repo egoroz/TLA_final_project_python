@@ -66,8 +66,8 @@ class Spike:
     def __init__(self, screen, x, y, a, color=CYAN):
         self.x = x
         self.y = y
-        self.w = 25
-        self.h = 25
+        self.w = a
+        self.h = a
         # self.image = pg.transform.scale(pg.image.load("pic\spike.png"), (25, 25))
         self.screen = screen
         self.color = color
@@ -325,6 +325,13 @@ def update_level(screen, need_slide, width, levels, player, scales, platforms, s
             scale_objects(spikes, scales)
             scale_objects(buttons, scales)
             scale_objects(doors, scales)
+            for spike in spikes:
+                spike.w += 2
+                spike.h += 2
+
+            for platform in platforms:
+                platform.w += 1
+                platform.h += 1
             for pl in platforms:
                 pl.x += width*scale_x
             for sp in spikes:

@@ -45,6 +45,14 @@ level.scale_objects(spikes, scales)
 level.scale_objects(buttons, scales)
 level.scale_objects(doors, scales)
 
+for spike in spikes:
+     spike.w += 2
+     spike.h += 2
+
+for platform in platforms:
+    platform.w += 1
+    platform.h += 1
+
 title_dict = {
     0:"0.Нулёвка по общесосу",
     1:"1.Повторение-мать учения",
@@ -116,20 +124,20 @@ class Game:
         finished = False
         while not finished:
             self.screen.fill(WHITE)
+            for spike in spikes:
+                spike.draw()
+            for spike in old_spikes:
+                spike.draw()
             for button in buttons:
                 button.draw()
                 button.update(hero)
             for platform in platforms:
                 platform.draw()
-            for spike in spikes:
-                spike.draw()
             for button in old_buttons:
                 button.draw()
                 button.update(hero)
             for platform in old_platforms:
                 platform.draw()
-            for spike in old_spikes:
-                spike.draw()
             for door in old_doors:
                 door.draw()
             for event in pg.event.get():
