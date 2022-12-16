@@ -4,6 +4,10 @@ import sys
 import pygame as pg
 import models.player as player
 
+def escape():
+    pg.quit()
+    sys.exit()
+
 width, height = 1920//2, 1080//2
 sys_width, sys_height = pg.display.Info().current_w, pg.display.Info().current_h
 scales = (sys_width/width, sys_height/height)
@@ -21,7 +25,7 @@ old_platforms = []
 old_spikes = []
 old_buttons = []
 old_doors = []
-levels = 0
+levels = 10
 slide = False
 need_slide = 0
 count_wind = -1  # номер картинки ветра
@@ -31,6 +35,7 @@ player_position = (0, 0, 0)
 count_mouse = 0
 knock_count = 0
 now_death = 0
+flag_11 = True
 
 level.read_data(screen, platforms, spikes, buttons, doors, 'docs/objects.json')
 collisable_obj = platforms.copy()
@@ -51,7 +56,8 @@ title_dict = {
     7:"7.Предел жизней кота",
     8:"8.Сникерсни - притормози",
     9:"9.Тут нет подвоха",
-    10:"10.Отл(10)"
+    10:"10.Отл(10)",
+    11:"Конец?"
     }
 
 hint_dict = {
@@ -65,7 +71,8 @@ hint_dict = {
     7:"Нет, тут без Тейлора",
     8:"Может, проверить ту кнопочку?",
     9:"Ты даже не пытался",
-    10:"Отл(10)"
+    10:"Отл(10)",
+    11:"Конец."
     }
 
 hero = player.Player(0, 440)
@@ -83,6 +90,7 @@ down = False
 space = False
 mouse = False
 last_mouse = False
+secret = False
 
 class Game:
     '''Конструктор класса Game
@@ -91,7 +99,7 @@ class Game:
     platforms - список платформ
     spikes - список шипов
     '''
-    def __init__(self, screen, up, down, right, left, space, mouse):
+    def __init__(self, screen, up, down, right, left, space, mouse, secret):
         self.screen = screen
         self.up = up
         self.down = down
@@ -99,10 +107,12 @@ class Game:
         self.left = left
         self.space = space
         self.mouse = mouse
+        self.secret = secret
 
     def start_game(self):
         '''Запуск игры'''
-        global levels, old_platforms, old_spikes, old_buttons, old_doors, need_slide, slide, count_wind, tick, player_position, knock_count, count_mouse, last_mouse, now_death
+        global levels, old_platforms, old_spikes, old_buttons, old_doors, need_slide, slide, count_wind, tick,\
+            player_position, knock_count, count_mouse, last_mouse, now_death, flag_11
         finished = False
         while not finished:
             self.screen.fill(WHITE)
@@ -135,6 +145,10 @@ class Game:
                         self.right = True
                     if event.key == pg.K_SPACE:
                         self.space = True
+                    if event.key == pg.K_UP:
+                        self.up = True
+                    if event.key == pg.K_BACKQUOTE:
+                        self.secret = True
                 elif event.type == pg.KEYUP:
                     if event.key == pg.K_UP:
                         self.up = False
@@ -150,9 +164,11 @@ class Game:
                     self.mouse = False
             for door in doors:
                 door.draw()
-                flag, player_position, knock_count, count_mouse, last_mouse = level.check_passage(scales, hero, levels, buttons, self.space, player_position, doors, knock_count, self.mouse, count_mouse, last_mouse, now_death)
+                flag, player_position, knock_count, count_mouse, last_mouse = level.check_passage(scales, hero, levels, buttons, self.space, player_position, doors, knock_count, self.mouse, count_mouse, last_mouse, now_death, self.secret, platforms, spikes, old_platforms, old_spikes, old_buttons, old_doors)
                 door.update(flag)
-
+            if levels == 11 and flag_11:
+                platforms.append(level.Platform(screen, 300*scales[0], 300*scales[1], 600*scales[0], 10*scales[1]))
+                flag_11 = False
             menu.pause_game.has_been_called = False
             menu.ask_hint.has_been_called = False
             menu.game_buttons(screen, scales, menu.pause_game, menu.ask_hint)
@@ -166,19 +182,19 @@ class Game:
                 collisable_obj.append(doors[0])
             hero.update(self.left, self.right, self.up, self.screen, collisable_obj, spikes)
 
-
-
-            levels, old_platforms, old_spikes, old_buttons, old_doors, slide, need_slide = level.update_level(screen, need_slide, width, levels, hero, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, slide)
+            levels, old_platforms, old_spikes, old_buttons, old_doors, slide, need_slide = level.update_level(
+                screen, need_slide, width, levels, hero, scales, platforms, spikes, buttons, doors, old_platforms,
+                old_spikes, old_buttons, old_doors, slide)
             need_slide, count_wind, tick = level.level_slide(screen, slide, need_slide, width, height, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, hero, count_wind, tick)
             pg.display.update()
             fpsClock.tick(fps)
 
-game = Game(screen, up, down, right, left, space, mouse)
+game = Game(screen, up, down, right, left, space, mouse, secret)
 
 while not finished:
     screen.fill(WHITE)
     theme.init_theme(screen)
-    menu.start_buttons(screen, scales, game.start_game, pg.quit)
+    menu.start_buttons(screen, scales, game.start_game, escape)
     for event in pg.event.get():
         if event.type == pg.QUIT:
             finished = True

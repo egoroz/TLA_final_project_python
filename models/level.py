@@ -193,7 +193,8 @@ class Door:
         self.rect = (self.x, self.y, self.w, self.h)
 
 
-def check_passage(scales, player, levels, buttons, space, player_position, doors, knock_count, mouse, count_mouse, last_mouse, now_death):
+def check_passage(scales, player, levels, buttons, space, player_position, doors, knock_count, mouse, count_mouse,
+                  last_mouse, now_death, secret, platforms, spikes, old_platforms, old_spikes, old_buttons, old_doors):
     '''
     Agrs:
     scales - скейлинг
@@ -263,7 +264,18 @@ def check_passage(scales, player, levels, buttons, space, player_position, doors
         if (30 * scale_x < x < (30+50) * scale_x) and (30 * scale_y < y < (30 + 30) * scale_y) and mouse:
             flag = True
     if levels == 10:
-        pass
+        if secret:
+            flag = True
+    if levels == 11:
+        del platforms[:]
+        del doors[:]
+        del spikes[:]
+        del buttons[:]
+        del old_platforms[:]
+        del old_doors[:]
+        del old_spikes[:]
+        del old_buttons[:]
+
     return flag, (player_x_last, player_y_last, count_one_position), knock_count, count_mouse, last_mouse
 
 
