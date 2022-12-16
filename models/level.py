@@ -1,5 +1,6 @@
 import pygame as pg
 import json
+import sys
 
 pg.init()
 
@@ -194,7 +195,8 @@ class Door:
 
 
 def check_passage(scales, player, levels, buttons, space, player_position, doors, knock_count, mouse, count_mouse,
-                  last_mouse, now_death, secret, platforms, spikes, old_platforms, old_spikes, old_buttons, old_doors):
+                  last_mouse, now_death, secret, platforms, spikes, old_platforms, old_spikes, old_buttons, old_doors,
+                  flag_11):
     '''
     Agrs:
     scales - скейлинг
@@ -267,16 +269,17 @@ def check_passage(scales, player, levels, buttons, space, player_position, doors
         if secret:
             flag = True
     if levels == 11:
-        del platforms[:]
-        del doors[:]
-        del spikes[:]
-        del buttons[:]
-        del old_platforms[:]
-        del old_doors[:]
-        del old_spikes[:]
-        del old_buttons[:]
+        if flag_11:
+            del platforms[:]
+            del doors[:]
+            del spikes[:]
+            del buttons[:]
+            del old_platforms[:]
+            del old_doors[:]
+            del old_spikes[:]
+            del old_buttons[:]
 
-    return flag, (player_x_last, player_y_last, count_one_position), knock_count, count_mouse, last_mouse
+    return flag, (player_x_last, player_y_last, count_one_position), knock_count, count_mouse, last_mouse, now_death
 
 
 def update_level(screen, need_slide, width, levels, player, scales, platforms, spikes,
@@ -392,24 +395,25 @@ def level_slide(screen, slide, need_slide, width, height, scales, platforms, spi
             image = pg.transform.scale(pg.image.load(f"pic\_{count_wind}.png"), (width * scale_x, height*scale_y))
             screen.blit(image, (0, 0))
             tick += 1
-            if platforms[0].x < 0:
-                d = -0.1
-                while platforms[0].x < 0:
-                    for pl in platforms:
-                        pl.x -= d
-                    for sp in spikes:
-                        sp.x -= d
-                    for bt in buttons:
-                        bt.x -= d
-                    for dr in doors:
-                        dr.x -= d
+            if len(platforms)>0:
+                if platforms[0].x < 0:
+                    d = -0.1
+                    while platforms[0].x < 0:
+                        for pl in platforms:
+                            pl.x -= d
+                        for sp in spikes:
+                            sp.x -= d
+                        for bt in buttons:
+                            bt.x -= d
+                        for dr in doors:
+                            dr.x -= d
 
-                    for pl in old_platforms:
-                        pl.x -= d
-                    for sp in old_spikes:
-                        sp.x -= d
-                    for bt in old_buttons:
-                        bt.x -= d
-                    for dr in old_doors:
-                        dr.x -= d
+                        for pl in old_platforms:
+                            pl.x -= d
+                        for sp in old_spikes:
+                            sp.x -= d
+                        for bt in old_buttons:
+                            bt.x -= d
+                        for dr in old_doors:
+                            dr.x -= d
     return need_slide, count_wind, tick

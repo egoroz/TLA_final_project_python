@@ -56,7 +56,8 @@ title_dict = {
     7:"7.Предел жизней кота",
     8:"8.Сникерсни - притормози",
     9:"9.Тут нет подвоха",
-    10:"10.Отл(10)"
+    10:"10.Отл(10)",
+    11:"Конец?"
     }
 
 hint_dict = {
@@ -70,7 +71,8 @@ hint_dict = {
     7:"Нет, тут без Тейлора",
     8:"Может, проверить ту кнопочку?",
     9:"Ты даже не пытался",
-    10:"Отл(10)"
+    10:"Отл(10)",
+    11:"Конец."
     }
 
 hero = player.Player(0, 440)
@@ -162,10 +164,14 @@ class Game:
                     self.mouse = False
             for door in doors:
                 door.draw()
-                flag, player_position, knock_count, count_mouse, last_mouse = level.check_passage(scales, hero, levels, buttons, self.space, player_position, doors, knock_count, self.mouse, count_mouse, last_mouse, now_death, self.secret, platforms, spikes, old_platforms, old_spikes, old_buttons, old_doors)
+                flag, player_position, knock_count, count_mouse, last_mouse, now_death = level.check_passage(
+                scales, hero, levels, buttons, self.space, player_position, doors, knock_count, self.mouse, count_mouse,
+                last_mouse, now_death, self.secret, platforms, spikes, old_platforms, old_spikes, old_buttons,
+                old_doors, flag_11
+                                                                                                             )
                 door.update(flag)
             if levels == 11 and flag_11:
-                platforms.append(level.Platform(screen, 300*scales[0], 300*scales[1], 600*scales[0], 10*scales[1]))
+                platforms.append(level.Platform(screen,  300*scales[0], 330*scales[1], 600*scales[0], 600*scales[1]))
                 flag_11 = False
             menu.pause_game.has_been_called = False
             menu.ask_hint.has_been_called = False
@@ -177,7 +183,8 @@ class Game:
                 menu.hint(screen, scales, hint_dict, levels)
             collisable_obj = platforms.copy()
             if levels != 9:
-                collisable_obj.append(doors[0])
+                if len(doors)>0:
+                    collisable_obj.append(doors[0])
             hero.update(self.left, self.right, self.up, self.screen, collisable_obj, spikes)
 
             levels, old_platforms, old_spikes, old_buttons, old_doors, slide, need_slide = level.update_level(
