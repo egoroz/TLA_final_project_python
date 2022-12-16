@@ -21,7 +21,7 @@ old_platforms = []
 old_spikes = []
 old_buttons = []
 old_doors = []
-levels = 8
+levels = 0
 slide = False
 need_slide = 0
 count_wind = -1  # номер картинки ветра
@@ -162,7 +162,8 @@ class Game:
             if menu.ask_hint.has_been_called == True:
                 menu.hint(screen, scales, hint_dict, levels)
             collisable_obj = platforms.copy()
-            collisable_obj.append(doors[0])
+            if levels != 9:
+                collisable_obj.append(doors[0])
             hero.update(self.left, self.right, self.up, self.screen, collisable_obj, spikes)
 
 
