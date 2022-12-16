@@ -21,7 +21,7 @@ old_platforms = []
 old_spikes = []
 old_buttons = []
 old_doors = []
-levels = 7
+levels = 8
 slide = False
 need_slide = 0
 count_wind = -1  # номер картинки ветра
@@ -109,10 +109,7 @@ class Game:
                 platform.draw()
             for spike in spikes:
                 spike.draw()
-            for door in doors:
-                door.draw()
-                flag, player_position, knock_count, count_mouse, last_mouse = level.check_passage(scales, hero, levels, buttons, self.space, player_position, doors, knock_count, self.mouse, count_mouse, last_mouse, now_death)
-                door.update(flag)
+
             for button in old_buttons:
                 button.draw()
                 button.update(hero)
@@ -147,6 +144,11 @@ class Game:
                     self.mouse = True
                 elif event.type == pg.MOUSEBUTTONUP:
                     self.mouse = False
+            for door in doors:
+                door.draw()
+                flag, player_position, knock_count, count_mouse, last_mouse = level.check_passage(scales, hero, levels, buttons, self.space, player_position, doors, knock_count, self.mouse, count_mouse, last_mouse, now_death)
+                door.update(flag)
+
             menu.pause_game.has_been_called = False
             menu.ask_hint.has_been_called = False
             menu.game_buttons(screen, scales, menu.pause_game, menu.ask_hint)
@@ -158,6 +160,8 @@ class Game:
             collisable_obj = platforms.copy()
             collisable_obj.append(doors[0])
             hero.update(self.left, self.right, self.up, self.screen, collisable_obj, spikes)
+
+
 
             levels, old_platforms, old_spikes, old_buttons, old_doors, slide, need_slide = level.update_level(screen, need_slide, width, levels, hero, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, slide)
             need_slide, count_wind, tick = level.level_slide(screen, slide, need_slide, width, height, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, hero, count_wind, tick)
