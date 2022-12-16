@@ -4,9 +4,11 @@ import sys
 import pygame as pg
 import models.player as player
 
+
 def escape():
     pg.quit()
     sys.exit()
+
 
 width, height = 1920//2, 1080//2
 sys_width, sys_height = pg.display.Info().current_w, pg.display.Info().current_h
@@ -37,8 +39,10 @@ knock_count = 0
 flag_11 = True
 
 level.read_data(screen, platforms, spikes, buttons, doors, 'docs/objects.json')
+
 collisable_obj = platforms.copy()
 collisable_obj.append(doors[0])
+
 level.scale_objects(platforms, scales)
 level.scale_objects(spikes, scales)
 level.scale_objects(buttons, scales)
@@ -99,6 +103,7 @@ mouse = False
 last_mouse = False
 secret = False
 
+
 class Game:
     '''Конструктор класса Game
     Args:
@@ -120,7 +125,9 @@ class Game:
         '''Запуск игры'''
         global levels, old_platforms, old_spikes, old_buttons, old_doors, need_slide, slide, count_wind, tick,\
             player_position, knock_count, count_mouse, last_mouse, flag_11
+
         finished = False
+
         while not finished:
             self.screen.fill(WHITE)
 
@@ -150,6 +157,7 @@ class Game:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     finished = True
+
                 elif event.type == pg.KEYDOWN:
                     if event.key == pg.K_UP:
                         self.up = True
@@ -163,6 +171,7 @@ class Game:
                         self.up = True
                     if event.key == pg.K_BACKQUOTE:
                         self.secret = True
+
                 elif event.type == pg.KEYUP:
                     if event.key == pg.K_UP:
                         self.up = False
@@ -172,8 +181,10 @@ class Game:
                         self.right = False
                     if event.key == pg.K_SPACE:
                         self.space = False
+
                 elif event.type == pg.MOUSEBUTTONDOWN:
                     self.mouse = True
+
                 elif event.type == pg.MOUSEBUTTONUP:
                     self.mouse = False
 
@@ -184,31 +195,42 @@ class Game:
                     count_mouse, last_mouse, self.secret, platforms, spikes, old_platforms, old_spikes, old_buttons,
                     old_doors, flag_11)
                 door.update(flag, scales[1])
+
             if levels == 11 and flag_11:
                 platforms.append(level.Platform(screen,  300*scales[0], 330*scales[1], 600*scales[0], 600*scales[1]))
                 flag_11 = False
+
             menu.pause_game.has_been_called = False
             menu.ask_hint.has_been_called = False
             menu.game_buttons(screen, scales, menu.pause_game, menu.ask_hint)
             menu.title(screen, scales, title_dict, levels)
+
             if menu.pause_game.has_been_called:
                 break
-            if menu.ask_hint.has_been_called == True:
+            if menu.ask_hint.has_been_called:
                 menu.hint(screen, scales, hint_dict, levels)
             collisable_obj = platforms.copy()
+
             if levels != 9:
-                if len(doors)>0:
+                if len(doors) > 0:
                     collisable_obj.append(doors[0])
+
             hero.update(self.left, self.right, self.up, self.screen, collisable_obj, spikes)
 
             levels, old_platforms, old_spikes, old_buttons, old_doors, slide, need_slide = level.update_level(
                 screen, need_slide, width, levels, hero, scales, platforms, spikes, buttons, doors, old_platforms,
                 old_spikes, old_buttons, old_doors, slide)
-            need_slide, count_wind, tick = level.level_slide(screen, slide, need_slide, width, height, scales, platforms, spikes, buttons, doors, old_platforms, old_spikes, old_buttons, old_doors, hero, count_wind, tick)
+
+            need_slide, count_wind, tick = level.level_slide(
+                screen, slide, need_slide, width, height, scales,
+                platforms, spikes, buttons, doors, old_platforms, old_spikes,
+                old_buttons, old_doors, hero, count_wind, tick)
             pg.display.update()
             fpsClock.tick(fps)
 
+
 game = Game(screen, up, down, right, left, space, mouse, secret)
+
 
 while not finished:
     screen.fill(WHITE)

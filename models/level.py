@@ -1,6 +1,5 @@
 import pygame as pg
 import json
-import sys
 
 pg.init()
 
@@ -277,7 +276,6 @@ def check_passage(scales, player, levels, buttons, space, player_position, doors
             del old_doors[:]
             del old_spikes[:]
             del old_buttons[:]
-
     return flag, (player_x_last, player_y_last, count_one_position), knock_count, count_mouse, last_mouse
 
 
@@ -401,7 +399,7 @@ def level_slide(screen, slide, need_slide, width, height, scales, platforms, spi
             image = pg.transform.scale(pg.image.load(f"pic\_{count_wind}.png"), (width * scale_x, height*scale_y))
             screen.blit(image, (0, 0))
             tick += 1
-            if len(platforms)>0:
+            if len(platforms) > 0:
                 if platforms[0].x < 0:
                     d = -0.1
                     while platforms[0].x < 0:
