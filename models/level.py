@@ -262,7 +262,6 @@ def check_passage(scales, player, levels, buttons, space, player_position, doors
     if levels == 8:
         # 30, 30, 50, 30 координаты кнопки пауза
         x, y = pg.mouse.get_pos()
-        print(x, y)
         if (30 * scale_x < x < (30+50) * scale_x) and (30 * scale_y < y < (30 + 30) * scale_y) and mouse:
             flag = True
     if levels == 10:
