@@ -25,7 +25,7 @@ old_platforms = []
 old_spikes = []
 old_buttons = []
 old_doors = []
-levels = 6
+levels = 0
 slide = False
 need_slide = 0
 count_wind = -1  # номер картинки ветра
@@ -123,22 +123,30 @@ class Game:
         finished = False
         while not finished:
             self.screen.fill(WHITE)
+
             for spike in spikes:
                 spike.draw()
+
             for spike in old_spikes:
                 spike.draw()
+
             for button in buttons:
                 button.draw()
                 button.update(hero)
+
             for platform in platforms:
                 platform.draw()
+
             for button in old_buttons:
                 button.draw()
                 button.update(hero)
+
             for platform in old_platforms:
                 platform.draw()
+
             for door in old_doors:
                 door.draw()
+
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     finished = True
@@ -168,13 +176,13 @@ class Game:
                     self.mouse = True
                 elif event.type == pg.MOUSEBUTTONUP:
                     self.mouse = False
+
             for door in doors:
                 door.draw()
                 flag, player_position, knock_count, count_mouse, last_mouse = level.check_passage(
-                scales, hero, levels, buttons, self.space, player_position, doors, knock_count, self.mouse, count_mouse,
-                last_mouse, self.secret, platforms, spikes, old_platforms, old_spikes, old_buttons,
-                old_doors, flag_11
-                                                                                                             )
+                    scales, hero, levels, buttons, self.space, player_position, doors, knock_count, self.mouse,
+                    count_mouse, last_mouse, self.secret, platforms, spikes, old_platforms, old_spikes, old_buttons,
+                    old_doors, flag_11)
                 door.update(flag, scales[1])
             if levels == 11 and flag_11:
                 platforms.append(level.Platform(screen,  300*scales[0], 330*scales[1], 600*scales[0], 600*scales[1]))
