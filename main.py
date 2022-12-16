@@ -75,7 +75,7 @@ hint_dict = {
     11:"Конец."
     }
 
-hero = player.Player(0, 440)
+hero = player.Player(0, (230+40)*scales[1], 40, 40, scales)
 fps = 60
 fpsClock = pg.time.Clock()
 pg.init()
@@ -123,7 +123,6 @@ class Game:
                 platform.draw()
             for spike in spikes:
                 spike.draw()
-
             for button in old_buttons:
                 button.draw()
                 button.update(hero)
@@ -169,7 +168,7 @@ class Game:
                 last_mouse, now_death, self.secret, platforms, spikes, old_platforms, old_spikes, old_buttons,
                 old_doors, flag_11
                                                                                                              )
-                door.update(flag)
+                door.update(flag, scales[1])
             if levels == 11 and flag_11:
                 platforms.append(level.Platform(screen,  300*scales[0], 330*scales[1], 600*scales[0], 600*scales[1]))
                 flag_11 = False

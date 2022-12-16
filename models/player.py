@@ -9,10 +9,8 @@ class Player:
     ax = 0.5
     ay = 0.5
     maxv = 3
-    h = 60
-    w = 60
-   
-    def __init__(self, x, y):
+
+    def __init__(self, x, y, w, h, scales):
         self.x = x
         self.y = y
         self.vx = 0
@@ -24,6 +22,9 @@ class Player:
         self.animation_index = 0
         self.land = False
         self.imp = 0
+        self.scales = scales
+        self.h = h * scales[1]
+        self.w = w * scales[0]
         self.walk_cycle = [pg.transform.scale(pg.image.load(f"pic\p1_walk{i:0>2}.png"),(self.w,self.h)) for i in range(1,12)]
         self.stop = pg.transform.scale(pg.image.load("pic\p1_front.png"),(self.w,self.h))
         self.death = 0
@@ -33,7 +34,7 @@ class Player:
             for pl in spikes:
                 if pg.Rect.colliderect(self.rect,pl.make_rect()):
                     self.x=0
-                    self.y=440
+                    self.y=270*self.scales[1]
                     self.vx=0
                     self.vy=0
                     self.death += 1

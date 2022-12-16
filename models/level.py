@@ -177,12 +177,12 @@ class Door:
         self.opened = False
         self.c = 0  # на сколько пикселей поднялась дверь
 
-    def update(self, func):
+    def update(self, func, scale):
         '''Обновляет положение двери если выполнена функция func'''
         if func:
             self.opened = True
 
-        if self.opened and self.c < 200:
+        if self.opened and self.c < 120*scale:
             self.y -= 1
             self.c += 1
 
