@@ -30,14 +30,17 @@ class Player:
         self.death = 0
     def kill (self, on, spikes):
         '''Убивает и телепортирует в начало при касании шипов'''
+        flag = False
         if on:
             for pl in spikes:
-                if pg.Rect.colliderect(self.rect,pl.make_rect()):
+                if pg.Rect.colliderect(self.rect, pl.make_rect()):
                     self.x=0
                     self.y=270*self.scales[1]
                     self.vx=0
                     self.vy=0
-                    self.death += 1
+                    flag = True
+        if flag:
+            self.death += 1
 
     def oldcollision(self, platforms):
         '''Коллизия платформ'''

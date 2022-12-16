@@ -195,7 +195,7 @@ class Door:
 
 
 def check_passage(scales, player, levels, buttons, space, player_position, doors, knock_count, mouse, count_mouse,
-                  last_mouse, now_death, secret, platforms, spikes, old_platforms, old_spikes, old_buttons, old_doors,
+                  last_mouse, secret, platforms, spikes, old_platforms, old_spikes, old_buttons, old_doors,
                   flag_11):
     '''
     Agrs:
@@ -254,10 +254,10 @@ def check_passage(scales, player, levels, buttons, space, player_position, doors
             if count_mouse > 15:
                 flag = True
         last_mouse = mouse
-        now_death = player.death
+        player.death = 0
 
     if levels == 7:
-        if player.death - now_death >= 9:
+        if player.death >= 9:
             flag = True
     if levels == 8:
         # 30, 30, 50, 30 координаты кнопки пауза
@@ -278,7 +278,7 @@ def check_passage(scales, player, levels, buttons, space, player_position, doors
             del old_spikes[:]
             del old_buttons[:]
 
-    return flag, (player_x_last, player_y_last, count_one_position), knock_count, count_mouse, last_mouse, now_death
+    return flag, (player_x_last, player_y_last, count_one_position), knock_count, count_mouse, last_mouse
 
 
 def update_level(screen, need_slide, width, levels, player, scales, platforms, spikes,
