@@ -1,8 +1,8 @@
-import sys
 import pygame as pg
 import os
 
 BLACK = (0, 0, 0)
+
 
 class Theme:
     '''Конструктор класса Theme
@@ -22,6 +22,7 @@ class Theme:
 
         screen.fill(BLACK)
         screen.blit(self.background, self.background_rect)
+
 
 class Button:
     '''Конструктор класса Button
@@ -79,9 +80,11 @@ class Button:
         ])
         screen.blit(self.buttonSurface, self.buttonRect)
 
+
 def pause_game():
     '''Функция паузы игры'''
     pause_game.has_been_called = True
+
 
 def start_buttons(screen, scales, func_1, func_2):
     '''Отображает кнопки стартового меню
@@ -97,6 +100,7 @@ def start_buttons(screen, scales, func_1, func_2):
     objects = [New_game_button, Exit_game_button]
     for object in objects:
         object.process(screen)
+
 
 def game_buttons(screen, scales, func_1, func_2):
     '''Отображает кнопки игрового экрана
@@ -133,9 +137,11 @@ def title(screen, scales, dict, number, x = 270, y = 50):
     text_rect.center = (x, y)
     screen.blit(text_surface, text_rect)
 
+
 def ask_hint():
     '''Возвращает True, если нажать на хинт'''
     ask_hint.has_been_called = True
+
 
 def hint(screen, scales, dict, number, x = 700, y = 50):
     '''Отображение хинта при нажатии
