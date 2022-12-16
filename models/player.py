@@ -25,8 +25,8 @@ class Player:
         self.scales = scales
         self.h = h * scales[1]
         self.w = w * scales[0]
-        self.walk_cycle = [pg.transform.scale(pg.image.load(f"pic\p1_walk{i:0>2}.png"),(self.w,self.h)) for i in range(1,12)]
-        self.stop = pg.transform.scale(pg.image.load("pic\p1_front.png"),(self.w,self.h))
+        self.walk_cycle = [pg.transform.scale(pg.image.load(f"pic\p1_walk{i:0>2}.png"), (self.w, self.h)) for i in range(1, 12)]
+        self.stop = pg.transform.scale(pg.image.load("pic\p1_front.png"), (self.w, self.h))
         self.death = 0
 
     def kill (self, on, spikes):
@@ -48,17 +48,17 @@ class Player:
         for pl in platforms:
             d = 6
             if pg.Rect.colliderect(self.rect, pl.make_rect()):
-                if pg.Rect.colliderect(pg.Rect(self.x+self.w,self.y+d,2,self.h-3*d),pl.make_rect()):
+                if pg.Rect.colliderect(pg.Rect(self.x+self.w, self.y+d, 2, self.h-3*d), pl.make_rect()):
                    self.x -= 3
                    self.vx = 0
-                if pg.Rect.colliderect(pg.Rect(self.x,self.y+d, 2 ,self.h-3*d),pl.make_rect()):
+                if pg.Rect.colliderect(pg.Rect(self.x, self.y+d, 2, self.h-3*d), pl.make_rect()):
                     self.x += 3
                     self.vx = 0
-                if pg.Rect.colliderect(pg.Rect(self.x,self.y,self.w,2),pl.make_rect()):
+                if pg.Rect.colliderect(pg.Rect(self.x, self.y, self.w, 2), pl.make_rect()):
                     self.vy = 3
-                if pg.Rect.colliderect(pg.Rect(self.x,self.y+self.h+1,self.w,2),pl.make_rect()):
+                if pg.Rect.colliderect(pg.Rect(self.x, self.y+self.h+1, self.w, 2), pl.make_rect()):
                     self.vy = 0
-                    while pg.Rect.colliderect(pg.Rect(self.x,self.y+self.h+1,self.w,2),pl.make_rect()):
+                    while pg.Rect.colliderect(pg.Rect(self.x, self.y+self.h+1, self.w, 2), pl.make_rect()):
                        self.y -= 0.01
                     self.land=True
                 
@@ -87,17 +87,18 @@ class Player:
         for pl in platforms:
             plats.append(pl.make_rect())
         if dir == 'd':
-            if pg.Rect(self.x, self.y+self.h+2, self.w, 2).collidelist(plats)!=-1:
+            if pg.Rect(self.x, self.y+self.h+2, self.w, 2).collidelist(plats) != -1:
                 self.land = True
                 self.vy = 0
-            return pg.Rect(self.x, self.y+self.h+1, self.w, 2).collidelist(plats)!=-1
+            return pg.Rect(self.x, self.y+self.h+1, self.w, 2).collidelist(plats) != -1
         if dir == 'l':
-            return pg.Rect(self.x-1, self.y+d, 2, self.h-3*d).collidelist(plats)!=-1 or self.x<5
+            return pg.Rect(self.x-1, self.y+d, 2, self.h-3*d).collidelist(plats) != -1 or self.x < 5
         if dir == 'r':
-            return pg.Rect(self.x+self.w+1, self.y+d, 2, self.h-3*d).collidelist(plats)!=-1
+            return pg.Rect(self.x+self.w+1, self.y+d, 2, self.h-3*d).collidelist(plats) != -1
         if dir == 'u':
-            if pg.Rect(self.x, self.y-1, self.w, 2).collidelist(plats)!=-1:self.vy=0
-            return pg.Rect(self.x, self.y-1, self.w, 2).collidelist(plats)!=-1
+            if pg.Rect(self.x, self.y-1, self.w, 2).collidelist(plats) != -1:
+                self.vy = 0
+            return pg.Rect(self.x, self.y-1, self.w, 2).collidelist(plats) != -1
                 
     def anim(self):
         '''Анимация'''
