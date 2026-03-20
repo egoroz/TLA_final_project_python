@@ -7,9 +7,9 @@ class Player:
     x - стартовое положение героя по иксу
     y - стартовое положение героя по игреку
     '''
-    ax = 0.5
-    ay = 0.5
-    maxv = 3
+    ax = 1.5
+    ay = 1.5
+    maxv = 5
 
     def __init__(self, x, y, w, h, scales):
         self.x = x
