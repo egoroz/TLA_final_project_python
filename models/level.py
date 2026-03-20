@@ -1,5 +1,6 @@
 import pygame as pg
 import json
+from models.utils import *
 
 pg.init()
 
@@ -396,7 +397,7 @@ def level_slide(screen, slide, need_slide, width, height, scales, platforms, spi
             player.jump = 0
             if tick % 7 == 0:
                 count_wind = (count_wind + 1) % 7
-            image = pg.transform.scale(pg.image.load(f"pic\_{count_wind}.png"), (width * scale_x, height*scale_y))
+            image = pg.transform.scale(pg.image.load(get_path("..", "pic",f"_{count_wind}.png")), (width * scale_x, height*scale_y))
             screen.blit(image, (0, 0))
             tick += 1
             if len(platforms) > 0:

@@ -1,4 +1,5 @@
 import pygame as pg
+from models.utils import get_path
 
 class Player:
     '''Конструктор класса Player
@@ -18,15 +19,15 @@ class Player:
         self.ax = 0.5
         self.ay = 1
         self.jump = -10
-        self.g = 0.25
+        self.g = 0.2
         self.animation_index = 0
         self.land = False
         self.imp = 0
         self.scales = scales
         self.h = h * scales[1]
         self.w = w * scales[0]
-        self.walk_cycle = [pg.transform.scale(pg.image.load(f"pic\p1_walk{i:0>2}.png"), (self.w, self.h)) for i in range(1, 12)]
-        self.stop = pg.transform.scale(pg.image.load("pic\p1_front.png"), (self.w, self.h))
+        self.walk_cycle = [pg.transform.scale(pg.image.load(get_path("..", "pic", f"p1_walk{i:0>2}.png")), (self.w, self.h)) for i in range(1, 12)]
+        self.stop = pg.transform.scale(pg.image.load(get_path("..", "pic",f"p1_front.png")), (self.w, self.h))
         self.death = 0
 
     def kill (self, on, spikes):
